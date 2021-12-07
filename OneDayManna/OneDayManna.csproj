@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2244" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Xamarin.CommunityToolkit" Version="1.3.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Newtonsoft.Json" />
+    <None Remove="Xamarin.CommunityToolkit" />
+    <None Remove="Resources\" />
+    <None Remove="Resources\Images\" />
+    <None Remove="Resources\Images\image1.jpg" />
+    <None Remove="Resources\Fonts\" />
+    <None Remove="Resources\Fonts\batang.otf" />
+    <None Remove="Resources\Images\image2.jpg" />
+    <None Remove="Resources\Images\image3.jpg" />
+    <None Remove="Resources\Images\image4.jpg" />
+    <None Remove="Resources\Images\image5.jpg" />
+    <None Remove="Resources\Images\image6.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+    <Folder Include="Resources\Images\" />
+    <Folder Include="Resources\Fonts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Images\image1.jpg" />
+    <EmbeddedResource Include="Resources\Fonts\batang.otf" />
+    <EmbeddedResource Include="Resources\Images\image2.jpg" />
+    <EmbeddedResource Include="Resources\Images\image3.jpg" />
+    <EmbeddedResource Include="Resources\Images\image4.jpg" />
+    <EmbeddedResource Include="Resources\Images\image5.jpg" />
+    <EmbeddedResource Include="Resources\Images\image6.jpg" />
+  </ItemGroup>
+</Project>

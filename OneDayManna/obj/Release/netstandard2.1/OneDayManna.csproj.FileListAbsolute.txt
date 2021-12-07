@@ -1,0 +1,15 @@
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/bin/Release/netstandard2.1/OneDayManna.deps.json
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/bin/Release/netstandard2.1/OneDayManna.dll
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/bin/Release/netstandard2.1/ref/OneDayManna.dll
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/bin/Release/netstandard2.1/OneDayManna.pdb
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/OneDayManna.csproj.AssemblyReference.cache
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/OneDayManna.GeneratedMSBuildEditorConfig.editorconfig
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/App.xaml.g.cs
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/MainPage.xaml.g.cs
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/OneDayManna.AssemblyInfoInputs.cache
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/OneDayManna.AssemblyInfo.cs
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/OneDayManna.csproj.CoreCompileInputs.cache
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/XamlC.stamp
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/OneDayManna.dll
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/ref/OneDayManna.dll
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/OneDayManna.pdb

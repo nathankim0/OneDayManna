@@ -1,0 +1,6 @@
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.0/OneDayManna.GeneratedMSBuildEditorConfig.editorconfig
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.0/App.xaml.g.cs
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.0/MainPage.xaml.g.cs
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.0/OneDayManna.AssemblyInfoInputs.cache
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.0/OneDayManna.AssemblyInfo.cs
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.0/OneDayManna.csproj.CoreCompileInputs.cache

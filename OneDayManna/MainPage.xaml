@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="OneDayManna.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:root="clr-namespace:OneDayManna"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    ios:Page.UseSafeArea="false">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <root:ProfileIconConverter x:Key="ProfileIconConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Image
+            Aspect="AspectFill"
+            HorizontalOptions="Fill"
+            Source="https://picsum.photos/200/300"
+            VerticalOptions="Fill" />
+        <!--  Source="{Binding BackgroundImage, Converter={x:StaticResource ProfileIconConverter}}"  -->
+        <RefreshView
+            Margin="0,80,0,0"
+            IsRefreshing="{Binding IsRefreshing}"
+            RefreshColor="White"
+            Refreshing="RefreshView_Refreshing">
+            <ScrollView>
+                <StackLayout>
+                    <Label
+                        Padding="30,0,30,0"
+                        FontSize="20"
+                        Text="{Binding Range}"
+                        TextColor="White" />
+                    <StackLayout BackgroundColor="Transparent" BindableLayout.ItemsSource="{Binding MannaContents}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="30,10,30,10">
+                                    <Label
+                                        xct:ShadowEffect.Color="Black"
+                                        xct:ShadowEffect.Opacity="1"
+                                        xct:ShadowEffect.Radius="5"
+                                        TextColor="White"
+                                        VerticalOptions="Center">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span
+                                                    FontSize="17"
+                                                    LineHeight="1.7"
+                                                    Text="{Binding Number}" />
+                                                <Span
+                                                    FontSize="17"
+                                                    LineHeight="1.7"
+                                                    Text=" " />
+                                                <Span
+                                                    FontSize="17"
+                                                    LineHeight="1.7"
+                                                    Text="{Binding MannaString}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                        <Label.FontSize>
+                                            <OnPlatform
+                                                x:TypeArguments="x:Double"
+                                                Android="18"
+                                                iOS="16" />
+                                        </Label.FontSize>
+                                    </Label>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+        </RefreshView>
+    </Grid>
+
+</ContentPage>
