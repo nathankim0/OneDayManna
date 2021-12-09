@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="OneDayManna.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:root="clr-namespace:OneDayManna"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    ios:Page.UseSafeArea="false"
+    BackgroundColor="Black">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <root:ProfileIconConverter x:Key="ProfileIconConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <ffimageloading:CachedImage
+            x:Name="bacgroundCachedImage"
+            Aspect="AspectFill"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+            <ffimageloading:CachedImage.Transformations>
+                <fftransformations:BlurredTransformation Radius="0.7" />
+            </ffimageloading:CachedImage.Transformations>
+        </ffimageloading:CachedImage>
+
+        <BoxView
+            BackgroundColor="#40000000"
+            HorizontalOptions="Fill"
+            IsVisible="{Binding IsAndroid}"
+            VerticalOptions="Fill" />
+
+        <RefreshView
+            x:Name="refreshView"
+            IsRefreshing="{Binding IsRefreshing}"
+            RefreshColor="White"
+            Refreshing="RefreshView_Refreshing">
+            <ScrollView>
+                <StackLayout Margin="0,15,0,20">
+                    <Label
+                        Padding="30,0,30,0"
+                        FontSize="20"
+                        Text="{Binding Range}"
+                        TextColor="{Binding CustomTextColor}" />
+                    <StackLayout BackgroundColor="Transparent" BindableLayout.ItemsSource="{Binding MannaContents}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="30,10,30,10">
+                                    <Label
+                                        xct:ShadowEffect.Color="Black"
+                                        xct:ShadowEffect.Opacity="1"
+                                        xct:ShadowEffect.Radius="5"
+                                        TextColor="{Binding Path=BindingContext.CustomTextColor, Source={x:Reference refreshView}}"
+                                        VerticalOptions="Center">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span
+                                                    FontSize="17"
+                                                    LineHeight="1.7"
+                                                    Text="{Binding Number}" />
+                                                <Span
+                                                    FontSize="17"
+                                                    LineHeight="1.7"
+                                                    Text=" " />
+                                                <Span
+                                                    FontSize="17"
+                                                    LineHeight="1.7"
+                                                    Text="{Binding MannaString}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                        <Label.FontSize>
+                                            <OnPlatform
+                                                x:TypeArguments="x:Double"
+                                                Android="18"
+                                                iOS="16" />
+                                        </Label.FontSize>
+                                    </Label>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+
+                    <Button
+                        Clicked="Button_Clicked"
+                        FontSize="30"
+                        Text="color" />
+
+                </StackLayout>
+            </ScrollView>
+        </RefreshView>
+    </Grid>
+
+</ContentPage>

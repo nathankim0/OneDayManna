@@ -15,4 +15,29 @@
          which is used to tint widgets -->
     <!--<item name="colorAccent">#FF4081</item>-->
   </style>
+
+         <style name="MainTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:datePickerDialogTheme">@style/AppCompatDatePickerDialogStyle</item>
+        <item name="android:timePickerDialogTheme">@style/AppCompatTimePickerDialogStyle</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>  
+        <item name="android:windowContentOverlay">@null</item>  
+        <item name="android:windowActionBar">false</item>  
+  </style>
+         <style name="AppCompatDatePickerDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+    <item name="android:datePickerStyle">@style/style_date_picker</item>
+  </style>
+
+    <style name="AppCompatTimePickerDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+    <item name="android:timePickerStyle">@style/style_time_picker</item>
+  </style>
+     <style name="style_date_picker" parent="android:Widget.Material.Light.DatePicker">
+    <item name="android:datePickerMode">spinner</item>
+  </style>
+
+  <style name="style_time_picker" parent="android:Widget.Material.Light.TimePicker">
+    <item name="android:timePickerMode">spinner</item>
+  </style>
 </resources>

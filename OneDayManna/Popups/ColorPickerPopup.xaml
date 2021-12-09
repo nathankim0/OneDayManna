@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<pages:PopupPage
+    x:Class="OneDayManna.ColorPickerPopup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    Padding="0,20,0,20">
+    <Frame
+        BackgroundColor="{AppThemeBinding Dark=Black,
+                                          Light=White}"
+        CornerRadius="22"
+        HorizontalOptions="Fill"
+        VerticalOptions="Center">
+        <StackLayout>
+            <colorpicker:ColorCircle x:Name="colorPicker" SelectedColorChanged="ColorCircle_SelectedColorChanged" />
+            <Grid>
+                <Button
+                    BackgroundColor="Transparent"
+                    Clicked="Button_Clicked"
+                    FontFamily="batang"
+                    FontSize="20"
+                    HorizontalOptions="End"
+                    Text="Save"
+                    TextColor="#355C7D" />
+            </Grid>
+        </StackLayout>
+    </Frame>
+
+</pages:PopupPage>

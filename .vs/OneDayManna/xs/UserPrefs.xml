@@ -1,28 +1,17 @@
 ﻿<Properties StartupConfiguration="{7FFBAB6A-48F4-4F3A-9FCC-63263C5C89FE}|Default">
-  <MonoDevelop.Ide.ItemProperties.OneDayManna.Android FirstBuild="True" PreferredExecutionTarget="Android.Pixel_4_API_30" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="OneDayManna/MainPage.xaml">
-    <Files>
-      <File FileName="OneDayManna/Converters.cs" Line="22" Column="1" />
-      <File FileName="OneDayManna/MainPage.xaml" Line="27" Column="33" />
-      <File FileName="OneDayManna/MannaDataManager.cs" Line="36" Column="1" />
-    </Files>
+  <MonoDevelop.Ide.ItemProperties.OneDayManna.Android AndroidDesignerPreferredTheme="MainTheme" PreferredExecutionTarget="Android.pixel2_xamarin" />
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="OneDayManna" expanded="True">
-            <Node name="OneDayManna" expanded="True">
-              <Node name="Resources" expanded="True">
-                <Node name="Fonts" expanded="True" />
-                <Node name="Images" expanded="True" />
-              </Node>
-              <Node name="MainPage.xaml" expanded="True" selected="True" />
-            </Node>
+            <Node name="OneDayManna" expanded="True" />
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.OneDayManna.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.C75EFF8A-945E-4D09-BDB6-B8180A34C415" />
+  <MonoDevelop.Ide.ItemProperties.OneDayManna.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.E91773F1-C51A-4895-B3E3-4BEBF968D23D" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

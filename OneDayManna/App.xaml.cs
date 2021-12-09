@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Net;
+using System.Net.Http;
+using System.Net.Security;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,8 +12,8 @@ namespace OneDayManna
         public App()
         {
             InitializeComponent();
+
             MainPage = new MainPage();
-            AppManager.Init();
         }
 
         protected override void OnStart()
