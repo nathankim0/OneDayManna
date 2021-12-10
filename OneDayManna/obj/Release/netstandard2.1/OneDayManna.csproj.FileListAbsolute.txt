@@ -5,7 +5,10 @@
 /Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/OneDayManna.csproj.AssemblyReference.cache
 /Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/OneDayManna.GeneratedMSBuildEditorConfig.editorconfig
 /Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/App.xaml.g.cs
-/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/MainPage.xaml.g.cs
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/Popups/ColorPickerPopup.xaml.g.cs
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/Popups/SelectFeaturePopup.xaml.g.cs
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/Views/MainPage.xaml.g.cs
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/Views/SettingPage.xaml.g.cs
 /Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/OneDayManna.AssemblyInfoInputs.cache
 /Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/OneDayManna.AssemblyInfo.cs
 /Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/OneDayManna.csproj.CoreCompileInputs.cache

@@ -1,9 +1,14 @@
-﻿namespace OneDayManna
+﻿using Xamarin.CommunityToolkit.ObjectModel;
+
+namespace OneDayManna
 {
-    public class MannaContent
+    public class MannaContent : ObservableObject
     {
-        public string Verse { get; set; }
-        public int Number { get; set; }
+        private bool selected = false;
+        public bool Selected { get => selected; set => SetProperty(ref selected, value); }
+
+        public string BookAndJang { get; set; }
+        public int Jeol { get; set; }
         public string MannaString { get; set; }
     }
 }

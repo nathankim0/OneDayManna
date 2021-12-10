@@ -53,18 +53,25 @@ namespace OneDayManna
         {
             try
             {
+                AppManager.PrintStartText("GetRandomImageStream()");
+
                 var random = new Random();
 
                 var response = await _client.GetAsync(new Uri(Constants.IMAGE_API_ENDPOINT + random.Next()));
                 if (response.IsSuccessStatusCode)
                 {
-                    return await response.Content.ReadAsStreamAsync();
+                    var stream = await response.Content.ReadAsStreamAsync();
+                    AppManager.PrintCompleteText("GetRandomImageStream()");
+                    return stream;
                 }
-                return Stream.Null;
+                else
+                {
+                    throw new HttpRequestException();
+                }
             }
             catch (Exception ex)
             {
-                AppManager.ExceptionCommonText("SetImageSource()", ex.Message);
+                AppManager.PrintException("SetImageSource()", ex.Message);
                 return Stream.Null;
             }
         }

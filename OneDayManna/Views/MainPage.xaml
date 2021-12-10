@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="OneDayManna.MainPage"
+    x:Class="OneDayManna.Views.MainPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
@@ -9,11 +9,14 @@
     xmlns:root="clr-namespace:OneDayManna"
     xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
     ios:Page.UseSafeArea="false"
-    BackgroundColor="Black">
+    BackgroundColor="Black"
+    NavigationPage.BackButtonTitle=""
+    NavigationPage.HasBackButton="False"
+    NavigationPage.HasNavigationBar="False">
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <root:ProfileIconConverter x:Key="ProfileIconConverter" />
+            <root:AllSelectIconConverter x:Key="AllSelectIconConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -31,7 +34,6 @@
         <BoxView
             BackgroundColor="#40000000"
             HorizontalOptions="Fill"
-            IsVisible="{Binding IsAndroid}"
             VerticalOptions="Fill" />
 
         <RefreshView
@@ -39,59 +41,106 @@
             IsRefreshing="{Binding IsRefreshing}"
             RefreshColor="White"
             Refreshing="RefreshView_Refreshing">
+
             <ScrollView>
-                <StackLayout Margin="0,15,0,20">
+                <StackLayout Margin="0,20,0,0">
                     <Label
                         Padding="30,0,30,0"
-                        FontSize="20"
+                        xct:ShadowEffect.Color="Black"
+                        xct:ShadowEffect.Opacity="0.7"
+                        xct:ShadowEffect.Radius="5"
+                        FontSize="{Binding Path=BindingContext.CustomFontSize, Source={x:Reference refreshView}}"
                         Text="{Binding Range}"
                         TextColor="{Binding CustomTextColor}" />
-                    <StackLayout BackgroundColor="Transparent" BindableLayout.ItemsSource="{Binding MannaContents}">
+                    <StackLayout
+                        Margin="0,0,0,120"
+                        BackgroundColor="Transparent"
+                        BindableLayout.ItemsSource="{Binding MannaContents}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
-                                <Grid Padding="30,10,30,10">
+                                <Grid Padding="30,10,30,15" BackgroundColor="Transparent">
+                                    <Grid.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding Selected}"
+                                            TargetType="Grid"
+                                            Value="true">
+                                            <Setter Property="BackgroundColor" Value="#CC989898" />
+                                        </DataTrigger>
+                                        <DataTrigger
+                                            Binding="{Binding Selected}"
+                                            TargetType="Grid"
+                                            Value="false">
+                                            <Setter Property="BackgroundColor" Value="Transparent" />
+                                        </DataTrigger>
+                                    </Grid.Triggers>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="{Binding .}" Tapped="TapGestureRecognizer_Tapped" />
+                                    </Grid.GestureRecognizers>
                                     <Label
                                         xct:ShadowEffect.Color="Black"
                                         xct:ShadowEffect.Opacity="1"
                                         xct:ShadowEffect.Radius="5"
+                                        FontSize="{Binding Path=BindingContext.CustomFontSize, Source={x:Reference refreshView}}"
                                         TextColor="{Binding Path=BindingContext.CustomTextColor, Source={x:Reference refreshView}}"
                                         VerticalOptions="Center">
                                         <Label.FormattedText>
                                             <FormattedString>
-                                                <Span
-                                                    FontSize="17"
-                                                    LineHeight="1.7"
-                                                    Text="{Binding Number}" />
-                                                <Span
-                                                    FontSize="17"
-                                                    LineHeight="1.7"
-                                                    Text=" " />
-                                                <Span
-                                                    FontSize="17"
-                                                    LineHeight="1.7"
-                                                    Text="{Binding MannaString}" />
+                                                <Span LineHeight="1.7" Text="{Binding Jeol}" />
+                                                <Span LineHeight="1.7" Text=" " />
+                                                <Span LineHeight="1.7" Text="{Binding MannaString}" />
                                             </FormattedString>
                                         </Label.FormattedText>
-                                        <Label.FontSize>
-                                            <OnPlatform
-                                                x:TypeArguments="x:Double"
-                                                Android="18"
-                                                iOS="16" />
-                                        </Label.FontSize>
                                     </Label>
                                 </Grid>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </StackLayout>
-
-                    <Button
-                        Clicked="Button_Clicked"
-                        FontSize="30"
-                        Text="color" />
-
                 </StackLayout>
             </ScrollView>
         </RefreshView>
+
+        <StackLayout
+            x:Name="optionsStackLayout"
+            Margin="0,0,15,0"
+            BackgroundColor="Transparent"
+            HorizontalOptions="End"
+            Orientation="Horizontal"
+            VerticalOptions="Start">
+
+            <ImageButton
+                x:Name="selectButton"
+                Padding="3"
+                BackgroundColor="Transparent"
+                Clicked="OnSelectAllButtonClicked"
+                HorizontalOptions="EndAndExpand"
+                VerticalOptions="Start">
+                <ImageButton.Source>
+                    <FontImageSource
+                        FontFamily="materialdesignicons"
+                        Glyph="{Binding IsAllSelected, Converter={x:StaticResource AllSelectIconConverter}}"
+                        Size="30"
+                        Color="#F1E3AD" />
+                </ImageButton.Source>
+            </ImageButton>
+
+            <ImageButton
+                x:Name="settingButton"
+                Padding="3"
+                BackgroundColor="Transparent"
+                Clicked="OnSettingClicked"
+                HorizontalOptions="End"
+                VerticalOptions="Start">
+                <ImageButton.Source>
+                    <FontImageSource
+                        FontFamily="materialdesignicons"
+                        Glyph="{x:Static root:FontIcons.DotsVertical}"
+                        Size="34"
+                        Color="#F1E3AD" />
+                </ImageButton.Source>
+            </ImageButton>
+
+        </StackLayout>
+
     </Grid>
 
 </ContentPage>

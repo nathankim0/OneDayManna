@@ -1,11 +1,33 @@
 ﻿<Properties StartupConfiguration="{7FFBAB6A-48F4-4F3A-9FCC-63263C5C89FE}|Default">
   <MonoDevelop.Ide.ItemProperties.OneDayManna.Android AndroidDesignerPreferredTheme="MainTheme" PreferredExecutionTarget="Android.pixel2_xamarin" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="OneDayManna/Views/MainPage.xaml.cs">
+    <Files>
+      <File FileName="OneDayManna/Views/MainPage.xaml.cs" Line="111" Column="1" />
+      <File FileName="OneDayManna/Models/MannaContent.cs" Line="11" Column="24" />
+      <File FileName="OneDayManna/Views/MainPage.xaml" Line="88" Column="91" />
+      <File FileName="OneDayManna/Controls/MannaDataManager.cs" Line="69" Column="46" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="OneDayManna" expanded="True">
-            <Node name="OneDayManna" expanded="True" />
+            <Node name="OneDayManna" expanded="True">
+              <Node name="Controls" expanded="True" />
+              <Node name="Models" expanded="True" />
+              <Node name="Popups" expanded="True">
+                <Node name="ColorPickerPopup.xaml" expanded="True" />
+                <Node name="SelectFeaturePopup.xaml" expanded="True" />
+              </Node>
+              <Node name="ViewModels" expanded="True" />
+              <Node name="Views" expanded="True">
+                <Node name="MainPage.xaml" expanded="True">
+                  <Node name="MainPage.xaml.cs" selected="True" />
+                </Node>
+                <Node name="SettingPage.xaml" expanded="True" />
+              </Node>
+              <Node name="App.xaml" expanded="True" />
+            </Node>
+            <Node name="OneDayManna.iOS" expanded="True" />
           </Node>
         </State>
       </Pad>

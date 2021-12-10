@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="OneDayManna.Views.SettingPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:root="clr-namespace:OneDayManna"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    ios:Page.UseSafeArea="True"
+    BackgroundColor="{AppThemeBinding Dark=Black,
+                                      Light=White}"
+    NavigationPage.BackButtonTitle=""
+    NavigationPage.HasBackButton="False"
+    NavigationPage.HasNavigationBar="False">
+    <!--  BackgroundImageSource="{root:ImageResource OneDayManna.Resources.Images.image7.jpg}"  -->
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <root:ImageConverter x:Key="ImageConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <StackLayout Padding="30,10,30,50">
+            <ImageButton
+                x:Name="settingButton"
+                Padding="0,0,30,0"
+                BackgroundColor="Transparent"
+                Clicked="OnBackButtonClicked"
+                HorizontalOptions="Start"
+                VerticalOptions="Start">
+                <ImageButton.Source>
+                    <FontImageSource
+                        FontFamily="materialdesignicons"
+                        Glyph="{x:Static root:FontIcons.ArrowLeft}"
+                        Size="30"
+                        Color="{AppThemeBinding Dark=White,
+                                                Light=Black}" />
+                </ImageButton.Source>
+            </ImageButton>
+
+            <Label
+                FontSize="25"
+                HorizontalOptions="Center"
+                Text="글자색"
+                TextColor="{AppThemeBinding Dark=White,
+                                            Light=Black}" />
+
+            <colorpicker:ColorCircle
+                x:Name="colorPicker"
+                Margin="0,20,0,0"
+                SelectedColorChanged="ColorCircle_SelectedColorChanged" />
+
+            <Label
+                Margin="0,40,0,0"
+                FontSize="25"
+                HorizontalOptions="Center"
+                Text="폰트 크기"
+                TextColor="{AppThemeBinding Dark=White,
+                                            Light=Black}" />
+
+            <Slider
+                x:Name="fontSizeSlider"
+                Margin="0,10,0,0"
+                HorizontalOptions="Fill"
+                Maximum="30"
+                Minimum="17"
+                ValueChanged="Slider_ValueChanged" />
+
+            <Label
+                Margin="0,40,0,0"
+                FontSize="20"
+                HorizontalOptions="Start"
+                Text="(예시)"
+                TextColor="{AppThemeBinding Dark=White,
+                                            Light=Black}" />
+            <Label
+                x:Name="sampleLabel"
+                Margin="0,10,0,0"
+                BackgroundColor="#40000000"
+                HorizontalOptions="Center"
+                Text="태초에 하나님이 천지를 창조하시니라" />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

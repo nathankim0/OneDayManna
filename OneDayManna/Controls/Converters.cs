@@ -6,7 +6,7 @@ using Xamarin.Forms.Xaml;
 
 namespace OneDayManna
 {
-    public class ProfileIconConverter : IValueConverter
+    public class ImageConverter : IValueConverter
     {
         private readonly string IMAGE_RESOURCE_PATH = "OneDayManna.Resources.Images.";
         public string Source { get; set; }
@@ -46,6 +46,19 @@ namespace OneDayManna
             var imageSource = ImageSource.FromResource(Source, typeof(ImageResourceExtension).GetTypeInfo().Assembly);
 
             return imageSource;
+        }
+    }
+
+    public class AllSelectIconConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (bool)value ? FontIcons.CheckboxMultipleMarkedOutline : FontIcons.CheckboxMultipleBlankOutline;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return true;
         }
     }
 }

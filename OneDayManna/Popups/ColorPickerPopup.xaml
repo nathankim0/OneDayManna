@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
     xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
-    Padding="0,20,0,20">
+    Padding="20,0,20,0">
     <Frame
         BackgroundColor="{AppThemeBinding Dark=Black,
                                           Light=White}"

@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Security;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using OneDayManna.Views;
 
 namespace OneDayManna
 {
@@ -12,8 +13,7 @@ namespace OneDayManna
         public App()
         {
             InitializeComponent();
-
-            MainPage = new MainPage();
+            MainPage = new NavigationPage(new MainPage());
         }
 
         protected override void OnStart()

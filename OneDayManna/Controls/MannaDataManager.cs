@@ -21,6 +21,8 @@ namespace OneDayManna
 
         public static async Task<bool> GetManna(DateTime dateTime)
         {
+            AppManager.PrintStartText("GetManna()");
+
             Today = dateTime.ToString("yyyy년 MM월 dd일 (ddd)");
             DisplayDateRange = dateTime.ToString("MM/dd");
 
@@ -37,11 +39,13 @@ namespace OneDayManna
                 SetBibleWebAndAppUrl(bookAndJang);
                 SetMannaCollection(bookAndJang);
 
+                AppManager.PrintCompleteText("GetManna()");
+
                 return true;
             }
             catch (Exception e)
             {
-                AppManager.ExceptionCommonText("GetManna()", e.Message);
+                AppManager.PrintException("GetManna()", e.Message);
                 return false;
             }
         }
@@ -53,21 +57,19 @@ namespace OneDayManna
 
             foreach (var node in JsonMannaData.Contents)
             {
-                var onlyNum = 0;
+                var jeol = 0;
                 var onlyString = "";
 
                 try { onlyString = Regex.Replace(node, @"\d", "").Substring(1); }
-                catch (Exception e) { AppManager.ExceptionCommonText("SetMannaCollection onlystring", e.Message); }
+                catch (Exception e) { AppManager.PrintException("SetMannaCollection onlystring", e.Message); }
 
-                try { onlyNum = int.Parse(Regex.Replace(node, @"\D", "")); }
-                catch (Exception e) { AppManager.ExceptionCommonText("SetMannaCollection onlyNum", e.Message); }
-
-                var verse = bookAndJang + onlyNum;
+                try { jeol = int.Parse(Regex.Replace(node, @"\D", "")); }
+                catch (Exception e) { AppManager.PrintException("SetMannaCollection onlyNum", e.Message); }
 
                 mannaContents.Add(new MannaContent
                 {
-                    Number = onlyNum,
-                    Verse = verse,
+                    BookAndJang = bookAndJang,
+                    Jeol = jeol,
                     MannaString = onlyString,
                 });
 
@@ -97,7 +99,7 @@ namespace OneDayManna
             }
             catch (Exception e)
             {
-                AppManager.ExceptionCommonText("ExtractJang()", e.Message);
+                AppManager.PrintException("ExtractJang()", e.Message);
             }
             return _jang;
         }
@@ -111,7 +113,7 @@ namespace OneDayManna
             }
             catch (Exception e)
             {
-                AppManager.ExceptionCommonText("ExtractBookKor()", e.Message);
+                AppManager.PrintException("ExtractBookKor()", e.Message);
             }
             return _bookKor;
         }
@@ -125,7 +127,7 @@ namespace OneDayManna
             }
             catch (Exception e)
             {
-                AppManager.ExceptionCommonText("GetJeolRange()", e.Message);
+                AppManager.PrintException("GetJeolRange()", e.Message);
             }
 
             return tmpVerseNumRange;
@@ -140,7 +142,7 @@ namespace OneDayManna
             }
             catch (Exception e)
             {
-                AppManager.ExceptionCommonText("ExtractBookAndJang()", e.Message);
+                AppManager.PrintException("ExtractBookAndJang()", e.Message);
             }
 
             return tmpBibleAt;
