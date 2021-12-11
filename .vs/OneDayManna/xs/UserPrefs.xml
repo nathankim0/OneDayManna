@@ -1,12 +1,6 @@
 ﻿<Properties StartupConfiguration="{7FFBAB6A-48F4-4F3A-9FCC-63263C5C89FE}|Default">
-  <MonoDevelop.Ide.ItemProperties.OneDayManna.Android AndroidDesignerPreferredTheme="MainTheme" PreferredExecutionTarget="Android.pixel2_xamarin" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="OneDayManna/Views/MainPage.xaml.cs">
-    <Files>
-      <File FileName="OneDayManna/Views/MainPage.xaml.cs" Line="111" Column="1" />
-      <File FileName="OneDayManna/Models/MannaContent.cs" Line="11" Column="24" />
-      <File FileName="OneDayManna/Views/MainPage.xaml" Line="88" Column="91" />
-      <File FileName="OneDayManna/Controls/MannaDataManager.cs" Line="69" Column="46" />
-    </Files>
+  <MonoDevelop.Ide.ItemProperties.OneDayManna.Android AndroidDesignerPreferredTheme="MainTheme" PreferredExecutionTarget="Android.Pixel_4_API_30" />
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
@@ -18,14 +12,20 @@
                 <Node name="ColorPickerPopup.xaml" expanded="True" />
                 <Node name="SelectFeaturePopup.xaml" expanded="True" />
               </Node>
-              <Node name="ViewModels" expanded="True" />
+              <Node name="Resources" expanded="True" />
+              <Node name="ViewModels" expanded="True">
+                <Node name="MainPageViewModel.cs" selected="True" />
+              </Node>
               <Node name="Views" expanded="True">
-                <Node name="MainPage.xaml" expanded="True">
-                  <Node name="MainPage.xaml.cs" selected="True" />
-                </Node>
+                <Node name="MainPage.xaml" expanded="True" />
                 <Node name="SettingPage.xaml" expanded="True" />
               </Node>
               <Node name="App.xaml" expanded="True" />
+            </Node>
+            <Node name="OneDayManna.Android" expanded="True">
+              <Node name="Resources" expanded="True">
+                <Node name="drawable" expanded="True" />
+              </Node>
             </Node>
             <Node name="OneDayManna.iOS" expanded="True" />
           </Node>
@@ -35,7 +35,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.OneDayManna.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.E91773F1-C51A-4895-B3E3-4BEBF968D23D" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -28,15 +28,8 @@
     <None Remove="Newtonsoft.Json" />
     <None Remove="Xamarin.CommunityToolkit" />
     <None Remove="Resources\" />
-    <None Remove="Resources\Images\" />
-    <None Remove="Resources\Images\image1.jpg" />
     <None Remove="Resources\Fonts\" />
     <None Remove="Resources\Fonts\batang.otf" />
-    <None Remove="Resources\Images\image2.jpg" />
-    <None Remove="Resources\Images\image3.jpg" />
-    <None Remove="Resources\Images\image4.jpg" />
-    <None Remove="Resources\Images\image5.jpg" />
-    <None Remove="Resources\Images\image6.jpg" />
     <None Remove="Xamarin.FFImageLoading.Transformations" />
     <None Remove="Xamarin.FFImageLoading.Forms" />
     <None Remove="ColorPicker.Xamarin.Forms" />
@@ -52,7 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
-    <Folder Include="Resources\Images\" />
     <Folder Include="Resources\Fonts\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Models\" />
@@ -62,13 +54,7 @@
     <Folder Include="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Images\image1.jpg" />
     <EmbeddedResource Include="Resources\Fonts\batang.otf" />
-    <EmbeddedResource Include="Resources\Images\image2.jpg" />
-    <EmbeddedResource Include="Resources\Images\image3.jpg" />
-    <EmbeddedResource Include="Resources\Images\image4.jpg" />
-    <EmbeddedResource Include="Resources\Images\image5.jpg" />
-    <EmbeddedResource Include="Resources\Images\image6.jpg" />
     <EmbeddedResource Include="Resources\materialdesignicons.ttf" />
   </ItemGroup>
 </Project>

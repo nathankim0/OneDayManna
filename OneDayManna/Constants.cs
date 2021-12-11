@@ -16,6 +16,7 @@ namespace OneDayManna
         public static readonly string IMAGE_API_ENDPOINT = "https://source.unsplash.com/random/1080x1920/?nature/";
 
         public static readonly string DEFAULT_TEXT_COLOR = "#FFFFFFFF";
+        public static readonly string DEFAULT_BACKGROUND_DIM_COLOR = "#40000000";
     }
 }
 

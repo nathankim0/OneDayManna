@@ -25,14 +25,10 @@
             x:Name="bacgroundCachedImage"
             Aspect="AspectFill"
             HorizontalOptions="Fill"
-            VerticalOptions="Fill">
-            <ffimageloading:CachedImage.Transformations>
-                <fftransformations:BlurredTransformation Radius="0.7" />
-            </ffimageloading:CachedImage.Transformations>
-        </ffimageloading:CachedImage>
+            VerticalOptions="Fill" />
 
         <BoxView
-            BackgroundColor="#40000000"
+            BackgroundColor="{Binding CustomBackgroundDimColor}"
             HorizontalOptions="Fill"
             VerticalOptions="Fill" />
 
@@ -101,7 +97,6 @@
 
         <StackLayout
             x:Name="optionsStackLayout"
-            Margin="0,0,15,0"
             BackgroundColor="Transparent"
             HorizontalOptions="End"
             Orientation="Horizontal"

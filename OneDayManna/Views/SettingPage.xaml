@@ -4,10 +4,11 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
     xmlns:root="clr-namespace:OneDayManna"
     xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-    ios:Page.UseSafeArea="True"
+    ios:Page.UseSafeArea="False"
     BackgroundColor="{AppThemeBinding Dark=Black,
                                       Light=White}"
     NavigationPage.BackButtonTitle=""
@@ -21,7 +22,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <ScrollView>
+    <ScrollView x:Name="outerScrollView">
         <StackLayout Padding="30,10,30,50">
             <ImageButton
                 x:Name="settingButton"
@@ -40,21 +41,51 @@
                 </ImageButton.Source>
             </ImageButton>
 
-            <Label
-                FontSize="25"
+            <Grid Margin="0,10,0,0" HeightRequest="250">
+                <ffimageloading:CachedImage x:Name="sampleImage" Source="sampleimage" />
+                <BoxView
+                    x:Name="backgroundDimBoxView"
+                    BackgroundColor="#40000000"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill" />
+                <Label
+                    x:Name="sampleLabel"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="1 태초에 하나님이 천지를 창조하시니라"
+                    VerticalOptions="Center" />
+            </Grid>
+
+            <Button
+                Margin="0,20,0,0"
+                Clicked="OnTextColorButtonClicked"
+                FontSize="20"
                 HorizontalOptions="Center"
-                Text="글자색"
+                Text="글자색 설정"
                 TextColor="{AppThemeBinding Dark=White,
                                             Light=Black}" />
+            <!--<colorpicker:ColorCircle
+                x:Name="textColorPicker"
+                Padding="20"
+                SelectedColorChanged="OnTextColorChanged" />-->
 
-            <colorpicker:ColorCircle
-                x:Name="colorPicker"
-                Margin="0,20,0,0"
-                SelectedColorChanged="ColorCircle_SelectedColorChanged" />
+
+            <Button
+                Margin="0,40,0,0"
+                Clicked="OnBackgroundDimColorButtonClicked"
+                FontSize="20"
+                HorizontalOptions="Center"
+                Text="배경 그림자 색 설정"
+                TextColor="{AppThemeBinding Dark=White,
+                                            Light=Black}" />
+            <!--<colorpicker:ColorCircle
+                x:Name="backgroundDimColorPicker"
+                Padding="20"
+                SelectedColorChanged="OnBackgroundDimColorChanged" />-->
 
             <Label
                 Margin="0,40,0,0"
-                FontSize="25"
+                FontSize="20"
                 HorizontalOptions="Center"
                 Text="폰트 크기"
                 TextColor="{AppThemeBinding Dark=White,
@@ -63,24 +94,13 @@
             <Slider
                 x:Name="fontSizeSlider"
                 Margin="0,10,0,0"
+                HeightRequest="30"
                 HorizontalOptions="Fill"
                 Maximum="30"
+                MaximumTrackColor="{AppThemeBinding Dark=LightGray,
+                                                    Light=Gray}"
                 Minimum="17"
                 ValueChanged="Slider_ValueChanged" />
-
-            <Label
-                Margin="0,40,0,0"
-                FontSize="20"
-                HorizontalOptions="Start"
-                Text="(예시)"
-                TextColor="{AppThemeBinding Dark=White,
-                                            Light=Black}" />
-            <Label
-                x:Name="sampleLabel"
-                Margin="0,10,0,0"
-                BackgroundColor="#40000000"
-                HorizontalOptions="Center"
-                Text="태초에 하나님이 천지를 창조하시니라" />
         </StackLayout>
     </ScrollView>
 </ContentPage>

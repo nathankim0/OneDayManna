@@ -19,8 +19,8 @@ namespace OneDayManna.Views
         {
             InitializeComponent();
 
-            refreshView.Margin = new Thickness(0, Constants.StatusBarHeight, 0, 0);
-            optionsStackLayout.Margin = new Thickness(0, Constants.StatusBarHeight, 0, 0);
+            refreshView.Margin = new Thickness(0, Constants.StatusBarHeight + 20, 0, 0);
+            optionsStackLayout.Margin = new Thickness(0, Constants.StatusBarHeight + 20, 30, 0);
 
             viewModel = new MainPageViewModel();
             BindingContext = viewModel;
@@ -30,6 +30,8 @@ namespace OneDayManna.Views
                 var selectedVersesText = GetSelectedMannaShareVersesText();
                 var selectedContentsText = GetSelectedMannaShareContentsText();
 
+                ResetSelection();
+                
                 await Clipboard.SetTextAsync(selectedContentsText);
                 await DisplayAlert("클립보드에 복사됨", selectedVersesText, "확인");
             };
@@ -43,6 +45,8 @@ namespace OneDayManna.Views
             {
                 var selectedContentsText = GetSelectedMannaShareContentsText();
 
+                ResetSelection();
+
                 await Share.RequestAsync(new ShareTextRequest
                 {
                     Text = DateTime.Today.ToString("yy-MM-dd") + "\n\n" + selectedContentsText,
@@ -51,6 +55,17 @@ namespace OneDayManna.Views
             };
 
             viewModel.IsRefreshing = true;
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
+
+            mainPageViewModel.CustomBackgroundDimColor = Color.FromHex(Preferences.Get("CustomBackgroundDimColor", Constants.DEFAULT_BACKGROUND_DIM_COLOR));
+            mainPageViewModel.CustomTextColor = Color.FromHex(Preferences.Get("CustomTextColor", Constants.DEFAULT_TEXT_COLOR));
+            mainPageViewModel.CustomFontSize = double.TryParse(Preferences.Get("TextSize", "17"),out var font)? font : 17;
         }
 
         private string GetSelectedMannaShareVersesText()
@@ -89,14 +104,6 @@ namespace OneDayManna.Views
                 AppManager.PrintException("GetSelectedMannaShare Contents Text()", ex.Message);
                 return string.Empty;
             }
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
-            mainPageViewModel.CustomFontSize = Preferences.Get("TextSize", 17);
-            mainPageViewModel.CustomTextColor = Color.FromHex(Preferences.Get("CustomTextColor", Constants.DEFAULT_TEXT_COLOR));
         }
 
         private async void RefreshView_Refreshing(object sender, EventArgs e)

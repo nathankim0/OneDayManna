@@ -117,6 +117,8 @@
     </ImageAsset>
     <ImageAsset Include="Assets.xcassets\image1.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\image1.imageset\image1.jpg" />
+    <ImageAsset Include="Assets.xcassets\sampleimage.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\sampleimage.imageset\sampleimage.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -157,5 +159,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets.xcassets\image1.imageset\" />
+    <Folder Include="Assets.xcassets\sampleimage.imageset\" />
   </ItemGroup>
 </Project>

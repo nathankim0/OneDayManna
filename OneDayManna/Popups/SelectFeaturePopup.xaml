@@ -18,7 +18,9 @@
             DurationOut="0"
             HasBackgroundAnimation="False"
             PositionIn="Center"
-            PositionOut="Center" />
+            PositionOut="Center"
+            ScaleIn="1"
+            ScaleOut="1" />
     </pages:PopupPage.Animation>
 
     <yummy:PancakeView

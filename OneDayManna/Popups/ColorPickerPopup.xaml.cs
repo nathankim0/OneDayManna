@@ -17,21 +17,27 @@ namespace OneDayManna
         public ColorPickerPopup()
         {
             InitializeComponent();
+            colorPicker.Padding = new Thickness(15, 0, 15, Constants.StatusBarHeight + 15);
         }
 
         void ColorCircle_SelectedColorChanged(object sender, ColorPicker.BaseClasses.ColorPickerEventArgs.ColorChangedEventArgs e)
         {
+            ColorChanged?.Invoke(this, selectedColor);
             selectedColor = e.NewColor;
         }
 
-        async void Button_Clicked(System.Object sender, System.EventArgs e)
+        //async void Button_Clicked(System.Object sender, System.EventArgs e)
+        //{
+        //    ColorChanged?.Invoke(this, selectedColor);
+        //    await Navigation.RemovePopupPageAsync(this);
+        //}
+        async void OnXButtonClicked(object sender, EventArgs e)
         {
-            ColorChanged?.Invoke(this, selectedColor);
-            await Navigation.RemovePopupPageAsync(Instance);
+            await Navigation.PopPopupAsync();
         }
-
         public void SetColor(Color color)
         {
+            colorPicker.SelectedColor = color;
         }
 
         protected override void OnAppearing()
