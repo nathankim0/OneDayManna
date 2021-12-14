@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="OneDayManna.App">
+<Application
+    x:Class="OneDayManna.App"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <Application.Resources>
-          <ResourceDictionary>
+        <ResourceDictionary>
 
             <Style TargetType="Grid">
                 <Setter Property="Padding" Value="0" />
@@ -13,11 +14,17 @@
                 <Setter Property="BackgroundColor" Value="Transparent" />
             </Style>
 
-                 <Style TargetType="Label">
+            <Style TargetType="Label">
                 <Setter Property="Padding" Value="0" />
                 <Setter Property="Margin" Value="0" />
                 <Setter Property="FontFamily" Value="batang" />
             </Style>
-              </ResourceDictionary>
+
+            <Style TargetType="Button">
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="FontFamily" Value="batang" />
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

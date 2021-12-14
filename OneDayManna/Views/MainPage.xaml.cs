@@ -19,7 +19,7 @@ namespace OneDayManna.Views
         {
             InitializeComponent();
 
-            refreshView.Margin = new Thickness(0, Constants.StatusBarHeight + 20, 0, 0);
+            innerStackLayout.Margin = new Thickness(0, Constants.StatusBarHeight + 20, 0, 0);
             optionsStackLayout.Margin = new Thickness(0, Constants.StatusBarHeight + 20, 30, 0);
 
             viewModel = new MainPageViewModel();
@@ -30,10 +30,24 @@ namespace OneDayManna.Views
                 var selectedVersesText = GetSelectedMannaShareVersesText();
                 var selectedContentsText = GetSelectedMannaShareContentsText();
 
-                ResetSelection();
+                await ResetSelection();
                 
                 await Clipboard.SetTextAsync(selectedContentsText);
-                await DisplayAlert("클립보드에 복사됨", selectedVersesText, "확인");
+
+                string title = "";
+                string ok = "";
+                if (AppManager.GetCurrentLanguage() == Language.English.ToString())
+                {
+                    title = "Copied to clipboard";
+                    ok = "Ok";
+                }
+                else
+                {
+                    title = "클립보드에 복사됨";
+                    ok = "확인";
+                }
+
+                await DisplayAlert(title, selectedVersesText, ok);
             };
 
             SelectFeaturePopup.Instance.DownloadClicked += (s, e) =>
@@ -44,13 +58,22 @@ namespace OneDayManna.Views
             SelectFeaturePopup.Instance.ShareClicked += async (s, e) =>
             {
                 var selectedContentsText = GetSelectedMannaShareContentsText();
+                await ResetSelection();
 
-                ResetSelection();
+                string title = "";
+                if (AppManager.GetCurrentLanguage() == Language.English.ToString())
+                {
+                    title = "Share";
+                }
+                else
+                {
+                    title = "공유";
+                }
 
                 await Share.RequestAsync(new ShareTextRequest
                 {
                     Text = DateTime.Today.ToString("yy-MM-dd") + "\n\n" + selectedContentsText,
-                    Title = "공유"
+                    Title = title
                 });
             };
 
@@ -63,11 +86,10 @@ namespace OneDayManna.Views
 
             if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
 
-            mainPageViewModel.CustomBackgroundDimColor = Color.FromHex(Preferences.Get("CustomBackgroundDimColor", Constants.DEFAULT_BACKGROUND_DIM_COLOR));
-            mainPageViewModel.CustomTextColor = Color.FromHex(Preferences.Get("CustomTextColor", Constants.DEFAULT_TEXT_COLOR));
-            mainPageViewModel.CustomFontSize = double.TryParse(Preferences.Get("TextSize", "17"),out var font)? font : 17;
+            mainPageViewModel.CustomBackgroundDimColor = AppManager.GetCurrentBackgroundDimColor();
+            mainPageViewModel.CustomTextColor = AppManager.GetCurrentTextColor();
+            mainPageViewModel.CustomFontSize = AppManager.GetCurrentTextSize();
         }
-
         private string GetSelectedMannaShareVersesText()
         {
             try
@@ -109,7 +131,7 @@ namespace OneDayManna.Views
         private async void RefreshView_Refreshing(object sender, EventArgs e)
         {
             optionsStackLayout.IsVisible = false;
-            ResetSelection();
+            await ResetSelection();
 
             var getImageTask = RestService.Instance.GetRandomImageStream();
             var getMannaTask = MannaDataManager.GetManna(DateTime.Now);
@@ -133,16 +155,50 @@ namespace OneDayManna.Views
             }
             else
             {
-                viewModel.MannaContents = MannaDataManager.MannaContents;
-                viewModel.Range = MannaDataManager.JsonMannaData.Verse;
+                if (AppManager.GetCurrentLanguage() == Language.English.ToString())
+                {
+                    SetEnglishMannaContents();
+                }
+                else
+                {
+                    SetKoreanMannaContents();
+                }
             }
             optionsStackLayout.IsVisible = true;
         }
 
+        private void SetEnglishMannaContents()
+        {
+            if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
+
+            mainPageViewModel.MannaContents = MannaDataManager.EnglishMannaContents;
+            mainPageViewModel.Range = MannaDataManager.JsonOtherLanguageManna.Reference;
+        }
+
+        private void SetKoreanMannaContents()
+        {
+            if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
+
+            mainPageViewModel.MannaContents = MannaDataManager.KoreanMannaContents;
+            mainPageViewModel.Range = MannaDataManager.JsonMannaData.Verse;
+        }
+        
         async void OnSettingClicked(object sender, EventArgs e)
         {
-            ResetSelection();
-            await Navigation.PushAsync(new SettingPage());
+            await ResetSelection();
+            var settingPage = new SettingPage();
+            settingPage.LanguageChanged += (object sender, Language language) =>
+            {
+                if(language == Language.English)
+                {
+                    SetEnglishMannaContents();
+                }
+                else
+                {
+                    SetKoreanMannaContents();
+                }
+            };
+            await Navigation.PushAsync(settingPage);
         }
 
         async void OnSelectAllButtonClicked(object sender, EventArgs e)
@@ -152,7 +208,7 @@ namespace OneDayManna.Views
             if (mainPageViewModel.IsAllSelected) //다 선택되어 있을 때
             {
                 mainPageViewModel.IsAllSelected = false;
-                ResetSelection();
+                await ResetSelection();
             }
             else
             {
@@ -217,7 +273,7 @@ namespace OneDayManna.Views
             }
         }
 
-        void ResetSelection()
+        async Task ResetSelection()
         {
             try
             {
@@ -226,13 +282,20 @@ namespace OneDayManna.Views
                 var mannaContents = viewModel.MannaContents ?? (viewModel.MannaContents = new Xamarin.CommunityToolkit.ObjectModel.ObservableRangeCollection<MannaContent>());
                 mannaContents.ToList().ForEach(manna => manna.Selected = false);
 
-                _ = Navigation.PopAllPopupAsync(false);
+                if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
+                mainPageViewModel.IsAllSelected = false;
+
+                try
+                {
+                    await Navigation.PopAllPopupAsync();
+                }
+                catch { }
+
             }
             catch (Exception ex)
             {
                 AppManager.PrintException("ResetSelection", ex.Message);
             }
         }
-
     }
 }

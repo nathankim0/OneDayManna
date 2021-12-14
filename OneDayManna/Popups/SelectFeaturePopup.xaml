@@ -25,14 +25,16 @@
 
     <yummy:PancakeView
         Margin="15"
-        Padding="22,15,22,15"
+        Padding="25"
         BackgroundColor="#CC355C7D"
-        CornerRadius="22"
-        HorizontalOptions="Fill"
+        CornerRadius="23"
+        HeightRequest="46"
+        HorizontalOptions="Center"
         VerticalOptions="End">
 
         <StackLayout Orientation="Horizontal">
             <ImageButton
+                Margin="0,0,20,0"
                 BackgroundColor="Transparent"
                 Clicked="OnShareClicked"
                 HorizontalOptions="StartAndExpand">
@@ -48,7 +50,7 @@
             <ImageButton
                 BackgroundColor="Transparent"
                 Clicked="OnCopyClicked"
-                HorizontalOptions="CenterAndExpand">
+                HorizontalOptions="EndAndExpand">
                 <ImageButton.Source>
                     <FontImageSource
                         FontFamily="materialdesignicons"
@@ -58,7 +60,7 @@
                 </ImageButton.Source>
             </ImageButton>
 
-            <ImageButton
+            <!--<ImageButton
                 BackgroundColor="Transparent"
                 Clicked="OnDownloadClicked"
                 HorizontalOptions="EndAndExpand">
@@ -69,7 +71,7 @@
                         Size="30"
                         Color="#F1E3AD" />
                 </ImageButton.Source>
-            </ImageButton>
+            </ImageButton>-->
 
         </StackLayout>
     </yummy:PancakeView>

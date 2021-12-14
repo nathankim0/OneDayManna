@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using Rg.Plugins.Popup.Services;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace OneDayManna
@@ -37,6 +38,26 @@ namespace OneDayManna
         public static bool IsPopupNavigationNullOrExist()
         {
             return PopupNavigation.Instance.PopupStack?.Any() ?? true;
+        }
+
+        public static double GetCurrentTextSize()
+        {
+            return double.TryParse(Preferences.Get("TextSize", "17"), out var font) ? font : 17;
+        }
+
+        public static Color GetCurrentTextColor()
+        {
+            return Color.FromHex(Preferences.Get("CustomTextColor", Constants.DEFAULT_TEXT_COLOR));
+        }
+
+        public static Color GetCurrentBackgroundDimColor()
+        {
+            return Color.FromHex(Preferences.Get("CustomBackgroundDimColor", Constants.DEFAULT_BACKGROUND_DIM_COLOR));
+        }
+
+        public static string GetCurrentLanguage()
+        {
+            return Preferences.Get("CurrentLanguage", Language.Korean.ToString());
         }
     }
 }

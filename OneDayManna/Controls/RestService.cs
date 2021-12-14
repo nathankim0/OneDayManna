@@ -13,6 +13,7 @@ namespace OneDayManna
         public static RestService Instance => _instance ?? (_instance = new RestService());
 
         private readonly HttpClient _client;
+        private static readonly string bibleApiEndpoint = "https://bible-api.com/";
 
         public RestService()
         {
@@ -49,6 +50,36 @@ namespace OneDayManna
             return mannaData;
         }
 
+        public async Task<JsonMannaOtherLanguageModel> GetMultilanguageManna(string bookKor, int jang, string jeolRange)
+        {
+            var url = $"{bibleApiEndpoint}{bookKor.BibleBookKorToEng()}+{jang}:{jeolRange}?translation=kjv";
+            try
+            {
+                var response = await _client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Debug.WriteLine(content);
+                    var mannaData = JsonConvert.DeserializeObject<JsonMannaOtherLanguageModel>(content);
+                    foreach(var node in mannaData.Verses)
+                    {
+                        try
+                        {
+                            node.Text = node.Text.TrimStart().TrimEnd().Replace("\n", "");
+                            Debug.WriteLine(node.Text);
+                        }
+                        catch(Exception e) { AppManager.PrintException("GetMultilanguageManna() trim", e.Message); }
+                    }
+
+                    return mannaData;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("\tERROR {0}", ex.Message);
+            }
+            return new JsonMannaOtherLanguageModel();
+        }
         public async Task<Stream> GetRandomImageStream()
         {
             try

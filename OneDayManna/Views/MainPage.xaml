@@ -39,8 +39,9 @@
             Refreshing="RefreshView_Refreshing">
 
             <ScrollView>
-                <StackLayout Margin="0,20,0,0">
+                <StackLayout x:Name="innerStackLayout" Margin="0,20,0,0">
                     <Label
+                        x:Name="rangeLabel"
                         Padding="30,0,30,0"
                         xct:ShadowEffect.Color="Black"
                         xct:ShadowEffect.Opacity="0.7"

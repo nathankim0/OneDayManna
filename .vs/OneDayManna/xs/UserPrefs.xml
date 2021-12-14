@@ -1,6 +1,19 @@
 ﻿<Properties StartupConfiguration="{7FFBAB6A-48F4-4F3A-9FCC-63263C5C89FE}|Default">
   <MonoDevelop.Ide.ItemProperties.OneDayManna.Android AndroidDesignerPreferredTheme="MainTheme" PreferredExecutionTarget="Android.Pixel_4_API_30" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="OneDayManna/Popups/ColorPickerPopup.xaml">
+    <Files>
+      <File FileName="OneDayManna/Views/MainPage.xaml.cs" Line="125" Column="14" />
+      <File FileName="OneDayManna/Models/JsonMannaModel.cs" />
+      <File FileName="OneDayManna/Controls/RestService.cs" />
+      <File FileName="OneDayManna/Views/SettingPage.xaml" />
+      <File FileName="OneDayManna/Popups/SelectFeaturePopup.xaml" Line="37" Column="33" />
+      <File FileName="OneDayManna/Views/MainPage.xaml" />
+      <File FileName="OneDayManna/Views/SettingPage.xaml.cs" />
+      <File FileName="OneDayManna/Controls/MannaDataManager.cs" />
+      <File FileName="OneDayManna/Popups/ColorPickerPopup.xaml.cs" />
+      <File FileName="OneDayManna/Popups/SelectFeaturePopup.xaml.cs" />
+      <File FileName="OneDayManna/Popups/ColorPickerPopup.xaml" Line="26" Column="31" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
@@ -9,25 +22,16 @@
               <Node name="Controls" expanded="True" />
               <Node name="Models" expanded="True" />
               <Node name="Popups" expanded="True">
-                <Node name="ColorPickerPopup.xaml" expanded="True" />
+                <Node name="ColorPickerPopup.xaml" expanded="True" selected="True" />
                 <Node name="SelectFeaturePopup.xaml" expanded="True" />
               </Node>
               <Node name="Resources" expanded="True" />
-              <Node name="ViewModels" expanded="True">
-                <Node name="MainPageViewModel.cs" selected="True" />
-              </Node>
               <Node name="Views" expanded="True">
                 <Node name="MainPage.xaml" expanded="True" />
                 <Node name="SettingPage.xaml" expanded="True" />
               </Node>
-              <Node name="App.xaml" expanded="True" />
             </Node>
-            <Node name="OneDayManna.Android" expanded="True">
-              <Node name="Resources" expanded="True">
-                <Node name="drawable" expanded="True" />
-              </Node>
-            </Node>
-            <Node name="OneDayManna.iOS" expanded="True" />
+            <Node name="OneDayManna.Android" expanded="True" />
           </Node>
         </State>
       </Pad>

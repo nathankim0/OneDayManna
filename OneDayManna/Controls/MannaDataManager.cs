@@ -8,8 +8,10 @@ namespace OneDayManna
 {
     public static class MannaDataManager
     {
-        public static ObservableRangeCollection<MannaContent> MannaContents = new ObservableRangeCollection<MannaContent>();
+        public static ObservableRangeCollection<MannaContent> KoreanMannaContents = new ObservableRangeCollection<MannaContent>();
+        public static ObservableRangeCollection<MannaContent> EnglishMannaContents = new ObservableRangeCollection<MannaContent>();
         public static JsonMannaModel JsonMannaData = new JsonMannaModel();
+        public static JsonMannaOtherLanguageModel JsonOtherLanguageManna = new JsonMannaOtherLanguageModel();
 
         public static string Today { get; set; } = DateTime.Now.ToString("yyyy년 MM월 dd일 (ddd)");
         public static string DisplayDateRange { get; set; } = DateTime.Now.ToString("MM/dd");
@@ -18,6 +20,12 @@ namespace OneDayManna
 
         public static string BibleWebUrl = "";
         public static string BibleAppUrl = "";
+
+        public static string BookKor;
+        public static int Jang;
+        public static string JeolRange;
+
+        public static string EnglishMannaRange;
 
         public static async Task<bool> GetManna(DateTime dateTime)
         {
@@ -37,7 +45,10 @@ namespace OneDayManna
                 var bookAndJang = ExtractBookAndJang();
 
                 SetBibleWebAndAppUrl(bookAndJang);
-                SetMannaCollection(bookAndJang);
+                SetMannaCollection(JsonMannaData, bookAndJang);
+
+                JsonOtherLanguageManna = await RestService.Instance.GetMultilanguageManna(BookKor, Jang, JeolRange);
+                SetMannaCollection(JsonOtherLanguageManna);
 
                 AppManager.PrintCompleteText("GetManna()");
 
@@ -50,7 +61,7 @@ namespace OneDayManna
             }
         }
 
-        private static void SetMannaCollection(string bookAndJang)
+        private static void SetMannaCollection(JsonMannaModel JsonMannaData, string bookAndJang)
         {
             var mannaContents = new List<MannaContent>();
             var allMannaTexts = string.Empty;
@@ -76,15 +87,34 @@ namespace OneDayManna
                 allMannaTexts += node + "\n\n";
             }
 
-            MannaContents = new ObservableRangeCollection<MannaContent>(mannaContents);
+            KoreanMannaContents = new ObservableRangeCollection<MannaContent>(mannaContents);
             AllMannaTexts = allMannaTexts;
+        }
+
+        private static void SetMannaCollection(JsonMannaOtherLanguageModel JsonMannaData)
+        {
+            var mannaContents = new List<MannaContent>();
+
+            foreach (var node in JsonMannaData.Verses)
+            {
+                mannaContents.Add(new MannaContent
+                {
+                    BookAndJang = $"{node.BookName}{node.Chapter}",
+                    Jeol = node.Verse,
+                    MannaString = node.Text,
+                });
+            }
+
+            EnglishMannaContents = new ObservableRangeCollection<MannaContent>(mannaContents);
         }
 
         private static void SetBibleWebAndAppUrl(string bookAndJang)
         {
-            var bookKor = ExtractBookKor(bookAndJang);
-            var jang = ExtractJang(bookAndJang);
-            var redirectUrl = $"{bookKor.BibleBookKorToEng()}.{jang}.{GetJeolRange()}.NKJV";
+            BookKor = ExtractBookKor(bookAndJang);
+            Jang = ExtractJang(bookAndJang);
+            JeolRange = GetJeolRange();
+
+            var redirectUrl = $"{BookKor.BibleBookKorToEng()}.{Jang}.{JeolRange}.NKJV";
 
             BibleWebUrl = $"{Constants.BIBLE_WEB_ENDPOINT}{redirectUrl}";
             BibleAppUrl = $"{Constants.BIBLE_APP_ENDPOINT}{redirectUrl}";

@@ -22,85 +22,145 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <ScrollView x:Name="outerScrollView">
-        <StackLayout Padding="30,10,30,50">
-            <ImageButton
-                x:Name="settingButton"
-                Padding="0,0,30,0"
-                BackgroundColor="Transparent"
-                Clicked="OnBackButtonClicked"
-                HorizontalOptions="Start"
-                VerticalOptions="Start">
-                <ImageButton.Source>
-                    <FontImageSource
-                        FontFamily="materialdesignicons"
-                        Glyph="{x:Static root:FontIcons.ArrowLeft}"
-                        Size="30"
-                        Color="{AppThemeBinding Dark=White,
-                                                Light=Black}" />
-                </ImageButton.Source>
-            </ImageButton>
 
-            <Grid Margin="0,10,0,0" HeightRequest="250">
-                <ffimageloading:CachedImage x:Name="sampleImage" Source="sampleimage" />
-                <BoxView
-                    x:Name="backgroundDimBoxView"
-                    BackgroundColor="#40000000"
-                    HorizontalOptions="Fill"
-                    VerticalOptions="Fill" />
+    <StackLayout x:Name="outerStackLayout">
+        <ImageButton
+            x:Name="backButton"
+            Padding="30,10,30,0"
+            BackgroundColor="Transparent"
+            Clicked="OnBackButtonClicked"
+            HorizontalOptions="Start"
+            VerticalOptions="Start">
+            <ImageButton.Source>
+                <FontImageSource
+                    FontFamily="materialdesignicons"
+                    Glyph="{x:Static root:FontIcons.ArrowLeft}"
+                    Size="30"
+                    Color="{AppThemeBinding Dark=White,
+                                            Light=Black}" />
+            </ImageButton.Source>
+        </ImageButton>
+
+        <ScrollView x:Name="outerScrollView">
+
+            <StackLayout Padding="30,0,30,50">
+
+                <Grid Margin="0,10,0,0">
+                    <ffimageloading:CachedImage
+                        x:Name="sampleImage"
+                        Aspect="AspectFill"
+                        HeightRequest="300"
+                        Source="image1" />
+                    <BoxView
+                        x:Name="backgroundDimBoxView"
+                        BackgroundColor="#40000000"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill" />
+                    <Label
+                        x:Name="sampleLabel"
+                        Margin="0,20,0,0"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        Text="1 태초에 하나님이 천지를 창조하시니라&#10;1 In the beginning God created the heaven and the earth"
+                        VerticalOptions="Center" />
+
+                    <StackLayout
+                        Margin="10"
+                        HorizontalOptions="End"
+                        Orientation="Horizontal"
+                        VerticalOptions="Start">
+                        <ImageButton
+                            x:Name="textColorTitleButton"
+                            Margin="0,0,10,0"
+                            Padding="5"
+                            xct:ShadowEffect.Color="Black"
+                            xct:ShadowEffect.Opacity="1"
+                            xct:ShadowEffect.Radius="5"
+                            BackgroundColor="White"
+                            BorderColor="White"
+                            BorderWidth="1"
+                            Clicked="OnTextColorButtonClicked"
+                            CornerRadius="25"
+                            HeightRequest="50"
+                            Pressed="textColorTitleButton_Pressed"
+                            Released="textColorTitleButton_Released"
+                            WidthRequest="50">
+                            <ImageButton.Source>
+                                <FontImageSource
+                                    FontFamily="materialdesignicons"
+                                    Glyph="{x:Static root:FontIcons.FormatColorText}"
+                                    Color="Navy" />
+                            </ImageButton.Source>
+                        </ImageButton>
+
+                        <ImageButton
+                            x:Name="dimTitleButton"
+                            Padding="7,7,3,3"
+                            xct:ShadowEffect.Color="Black"
+                            xct:ShadowEffect.Opacity="1"
+                            xct:ShadowEffect.Radius="5"
+                            BackgroundColor="White"
+                            BorderColor="White"
+                            BorderWidth="1"
+                            Clicked="OnBackgroundDimColorButtonClicked"
+                            CornerRadius="25"
+                            HeightRequest="50"
+                            Pressed="dimTitleButton_Pressed"
+                            Released="dimTitleButton_Released"
+                            WidthRequest="50">
+                            <ImageButton.Source>
+                                <FontImageSource
+                                    FontFamily="materialdesignicons"
+                                    Glyph="{x:Static root:FontIcons.FormatColorFill}"
+                                    Color="Navy" />
+                            </ImageButton.Source>
+                        </ImageButton>
+                    </StackLayout>
+                </Grid>
+
+
                 <Label
-                    x:Name="sampleLabel"
+                    x:Name="fontTitleLabel"
+                    Margin="0,40,0,0"
+                    FontSize="20"
                     HorizontalOptions="Center"
-                    HorizontalTextAlignment="Center"
-                    Text="1 태초에 하나님이 천지를 창조하시니라"
-                    VerticalOptions="Center" />
-            </Grid>
+                    Text="폰트 크기"
+                    TextColor="{AppThemeBinding Dark=White,
+                                                Light=Black}" />
 
-            <Button
-                Margin="0,20,0,0"
-                Clicked="OnTextColorButtonClicked"
-                FontSize="20"
-                HorizontalOptions="Center"
-                Text="글자색 설정"
-                TextColor="{AppThemeBinding Dark=White,
-                                            Light=Black}" />
-            <!--<colorpicker:ColorCircle
-                x:Name="textColorPicker"
-                Padding="20"
-                SelectedColorChanged="OnTextColorChanged" />-->
+                <Slider
+                    x:Name="fontSizeSlider"
+                    Margin="0,10,0,0"
+                    HeightRequest="30"
+                    HorizontalOptions="Fill"
+                    Maximum="30"
+                    MaximumTrackColor="{AppThemeBinding Dark=LightGray,
+                                                        Light=Gray}"
+                    Minimum="17"
+                    ValueChanged="Slider_ValueChanged" />
 
+                <Label
+                    x:Name="languageTitleLabel"
+                    Padding="0,40,0,10"
+                    FontSize="20"
+                    HorizontalOptions="Center"
+                    Text="Language"
+                    TextColor="{AppThemeBinding Dark=White,
+                                                Light=Black}" />
 
-            <Button
-                Margin="0,40,0,0"
-                Clicked="OnBackgroundDimColorButtonClicked"
-                FontSize="20"
-                HorizontalOptions="Center"
-                Text="배경 그림자 색 설정"
-                TextColor="{AppThemeBinding Dark=White,
-                                            Light=Black}" />
-            <!--<colorpicker:ColorCircle
-                x:Name="backgroundDimColorPicker"
-                Padding="20"
-                SelectedColorChanged="OnBackgroundDimColorChanged" />-->
+                <Picker
+                    x:Name="languagePicker"
+                    HorizontalOptions="Fill"
+                    SelectedIndexChanged="OnLanguagePickerSelectedIndexChanged">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>한국어</x:String>
+                            <x:String>English</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </StackLayout>
+        </ScrollView>
 
-            <Label
-                Margin="0,40,0,0"
-                FontSize="20"
-                HorizontalOptions="Center"
-                Text="폰트 크기"
-                TextColor="{AppThemeBinding Dark=White,
-                                            Light=Black}" />
-
-            <Slider
-                x:Name="fontSizeSlider"
-                Margin="0,10,0,0"
-                HeightRequest="30"
-                HorizontalOptions="Fill"
-                Maximum="30"
-                MaximumTrackColor="{AppThemeBinding Dark=LightGray,
-                                                    Light=Gray}"
-                Minimum="17"
-                ValueChanged="Slider_ValueChanged" />
-        </StackLayout>
-    </ScrollView>
+    </StackLayout>
 </ContentPage>
