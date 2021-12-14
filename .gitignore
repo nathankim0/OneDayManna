@@ -660,3 +660,22 @@ $RECYCLE.BIN/
 # Fody - auto-generated XML schema
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,visualstudio,rider,csharp
+OneDayManna/obj/Release/netstandard2.1/ref/OneDayManna.dll
+OneDayManna/obj/Release/netstandard2.1/OneDayManna.pdb
+OneDayManna/obj/Release/netstandard2.1/OneDayManna.csproj.CoreCompileInputs.cache
+OneDayManna/obj/Release/netstandard2.1/OneDayManna.dll
+OneDayManna/obj/Debug/netstandard2.1/ref/OneDayManna.dll
+OneDayManna/obj/Debug/netstandard2.1/OneDayManna.pdb
+OneDayManna/obj/Debug/netstandard2.1/OneDayManna.dll
+OneDayManna/obj/Debug/netstandard2.1/OneDayManna.csproj.CoreCompileInputs.cache
+OneDayManna/bin/Release/netstandard2.1/ref/OneDayManna.dll
+OneDayManna/bin/Release/netstandard2.1/OneDayManna.pdb
+OneDayManna/bin/Release/netstandard2.1/OneDayManna.dll
+OneDayManna/bin/Debug/netstandard2.1/ref/OneDayManna.dll
+OneDayManna/bin/Debug/netstandard2.1/OneDayManna.pdb
+OneDayManna/bin/Debug/netstandard2.1/OneDayManna.dll
+.vs/OneDayManna/xs/UserPrefs.xml
+.vs/OneDayManna/xs/project-cache/OneDayManna.iOS-Debug|iPhoneSimulator.json
+.vs/OneDayManna/xs/project-cache/OneDayManna.Android-Debug.json
+.vs/OneDayManna/xs/project-cache/OneDayManna-Release.json
+.vs/OneDayManna/xs/project-cache/OneDayManna-Debug.json
