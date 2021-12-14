@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using OneDayManna.Controls;
 using OneDayManna.Popups;
 using Rg.Plugins.Popup.Extensions;
 using Xamarin.Essentials;
@@ -19,63 +20,13 @@ namespace OneDayManna.Views
         {
             InitializeComponent();
 
-            innerStackLayout.Margin = new Thickness(0, Constants.StatusBarHeight + 20, 0, 0);
             optionsStackLayout.Margin = new Thickness(0, Constants.StatusBarHeight + 20, 30, 0);
 
             viewModel = new MainPageViewModel();
             BindingContext = viewModel;
 
-            SelectFeaturePopup.Instance.CopyClicked += async (s, e) =>
-            {
-                var selectedVersesText = GetSelectedMannaShareVersesText();
-                var selectedContentsText = GetSelectedMannaShareContentsText();
-
-                await ResetSelection();
-                
-                await Clipboard.SetTextAsync(selectedContentsText);
-
-                string title = "";
-                string ok = "";
-                if (AppManager.GetCurrentLanguage() == Language.English.ToString())
-                {
-                    title = "Copied to clipboard";
-                    ok = "Ok";
-                }
-                else
-                {
-                    title = "클립보드에 복사됨";
-                    ok = "확인";
-                }
-
-                await DisplayAlert(title, selectedVersesText, ok);
-            };
-
-            SelectFeaturePopup.Instance.DownloadClicked += (s, e) =>
-            {
-
-            };
-
-            SelectFeaturePopup.Instance.ShareClicked += async (s, e) =>
-            {
-                var selectedContentsText = GetSelectedMannaShareContentsText();
-                await ResetSelection();
-
-                string title = "";
-                if (AppManager.GetCurrentLanguage() == Language.English.ToString())
-                {
-                    title = "Share";
-                }
-                else
-                {
-                    title = "공유";
-                }
-
-                await Share.RequestAsync(new ShareTextRequest
-                {
-                    Text = DateTime.Today.ToString("yy-MM-dd") + "\n\n" + selectedContentsText,
-                    Title = title
-                });
-            };
+            SelectFeaturePopup.Instance.CopyClicked += OnCopyCliked;
+            SelectFeaturePopup.Instance.ShareClicked += OnShareCliked;
 
             viewModel.IsRefreshing = true;
         }
@@ -90,63 +41,35 @@ namespace OneDayManna.Views
             mainPageViewModel.CustomTextColor = AppManager.GetCurrentTextColor();
             mainPageViewModel.CustomFontSize = AppManager.GetCurrentTextSize();
         }
-        private string GetSelectedMannaShareVersesText()
+
+        private void optionsStackLayout_SizeChanged(object sender, EventArgs e)
         {
-            try
-            {
-                var selectedVersesText = string.Join(", ", selectedContentList.Select(x => $"{x.BookAndJang}:{x.Jeol}").ToArray());
-                Debug.WriteLine(selectedVersesText);
-                return selectedVersesText;
-            }
-            catch(Exception ex)
-            {
-                AppManager.PrintException("GetSelectedMannaShare Verses Text()", ex.Message);
-                return string.Empty;
-            }
-        }
-
-        private string GetSelectedMannaShareContentsText()
-        {
-            if (!(BindingContext is MainPageViewModel mainPageViewModel)) return string.Empty;
-
-            try
-            {
-                var selectedContentsText = string.Join("\n", selectedContentList.Select(x => $"{x.BookAndJang}:{x.Jeol} {x.MannaString}").ToArray());
-
-                if (viewModel?.IsAllSelected ?? false)
-                {
-                    selectedContentsText = $"{viewModel.Range}\n{selectedContentsText}";
-                }
-
-                Debug.WriteLine(selectedContentsText);
-                return selectedContentsText;
-            }
-            catch (Exception ex)
-            {
-                AppManager.PrintException("GetSelectedMannaShare Contents Text()", ex.Message);
-                return string.Empty;
-            }
+            innerStackLayout.Margin = new Thickness(0, innerStackLayout.Y + 50, 0, 0);
         }
 
         private async void RefreshView_Refreshing(object sender, EventArgs e)
         {
+            if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
+
             optionsStackLayout.IsVisible = false;
             await ResetSelection();
 
-            var getImageTask = RestService.Instance.GetRandomImageStream();
+            var getImageTask = ImageManager.GetImage();
             var getMannaTask = MannaDataManager.GetManna(DateTime.Now);
 
             await Task.WhenAll(getImageTask, getMannaTask);
 
-            var imageStream = getImageTask.Result;
-            if (imageStream == null || imageStream == System.IO.Stream.Null)
+            var result = getImageTask.Result;
+
+            if (result)
             {
-                bacgroundCachedImage.Source = "image1.jpg";
+                mainPageViewModel.CurrentImageSource = ImageSource.FromStream(() => ImageManager.DownloadedImageSource);
             }
             else
             {
-                bacgroundCachedImage.Source = ImageSource.FromStream(() => imageStream);
+                mainPageViewModel.CurrentImageSource = ImageSource.FromFile("image1.jpg");
             }
+
             viewModel.IsRefreshing = false;
 
             if (!getMannaTask.Result)
@@ -167,41 +90,69 @@ namespace OneDayManna.Views
             optionsStackLayout.IsVisible = true;
         }
 
-        private void SetEnglishMannaContents()
+        private bool isDownloading;
+        private async void OnDownloadButtonClicked(object sender, EventArgs e)
         {
-            if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
+            if (isDownloading) return;
 
-            mainPageViewModel.MannaContents = MannaDataManager.EnglishMannaContents;
-            mainPageViewModel.Range = MannaDataManager.JsonOtherLanguageManna.Reference;
-        }
+            isDownloading = true;
 
-        private void SetKoreanMannaContents()
-        {
-            if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
+            await Navigation.PushPopupAsync(LoadingPopup.Instance);
 
-            mainPageViewModel.MannaContents = MannaDataManager.KoreanMannaContents;
-            mainPageViewModel.Range = MannaDataManager.JsonMannaData.Verse;
-        }
-        
-        async void OnSettingClicked(object sender, EventArgs e)
-        {
-            await ResetSelection();
-            var settingPage = new SettingPage();
-            settingPage.LanguageChanged += (object sender, Language language) =>
+            var result = await ImageManager.SaveImage();
+
+            await Navigation.RemovePopupPageAsync(LoadingPopup.Instance);
+
+            var isEnglish = AppManager.GetCurrentLanguage() == Language.English.ToString();
+
+            if (!result)
             {
-                if(language == Language.English)
-                {
-                    SetEnglishMannaContents();
-                }
-                else
-                {
-                    SetKoreanMannaContents();
-                }
-            };
-            await Navigation.PushAsync(settingPage);
+                await Application.Current.MainPage.DisplayAlert(isEnglish ? "Failed to save image" : "이미지 저장 실패", isEnglish ? "Image could not be saved. Try again!" : "이미지 저장에 실패했습니다. 다시 시도해보세요!", isEnglish ? "OK" : "확인");
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert(isEnglish ? "Image saved" : "이미지 저장 완료", isEnglish ? "Check out the photo library" : "앨범을 확인해보세요!", isEnglish ? "OK" : "확인");
+            }
+
+            isDownloading = false;
         }
 
-        async void OnSelectAllButtonClicked(object sender, EventArgs e)
+        private bool isCapturing;
+        private async void OnCaptureButtonClicked(object sender, EventArgs e)
+        {
+            if (isCapturing) return;
+
+            isCapturing = true;
+
+            optionsStackLayout.IsVisible = false;
+
+            var screenshot = await Screenshot.CaptureAsync();
+
+            optionsStackLayout.IsVisible = true;
+
+            await Navigation.PushPopupAsync(LoadingPopup.Instance);
+
+            var stream = await screenshot.OpenReadAsync();
+            var bitmap = await ImageManager.ConvertStreamToSKBitmap(stream);
+            var result = await ImageManager.Save(bitmap);
+
+            await Navigation.RemovePopupPageAsync(LoadingPopup.Instance);
+
+            var isEnglish = AppManager.GetCurrentLanguage() == Language.English.ToString();
+
+            if (!result)
+            {
+                await Application.Current.MainPage.DisplayAlert(isEnglish ? "Failed to save screenshot" : "스크린샷 저장 실패", isEnglish ? "Image could not be saved. Try again!" : "이미지 저장에 실패했습니다. 다시 시도해보세요!", isEnglish ? "OK" : "확인");
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert(isEnglish ? "Screenshot saved" : "스크린샷 저장 완료", isEnglish ? "Check out the photo library" : "앨범을 확인해보세요!", isEnglish ? "OK" : "확인");
+            }
+
+            isCapturing = false;
+        }
+
+        private async void OnSelectAllButtonClicked(object sender, EventArgs e)
         {
             if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
 
@@ -220,10 +171,27 @@ namespace OneDayManna.Views
                 if (AppManager.IsPopupNavigationNullOrExist()) return;
                 await Navigation.PushPopupAsync(SelectFeaturePopup.Instance);
             }
-
         }
 
-        async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        private async void OnSettingClicked(object sender, EventArgs e)
+        {
+            await ResetSelection();
+            var settingPage = new SettingPage();
+            settingPage.LanguageChanged += (object sender, Language language) =>
+            {
+                if (language == Language.English)
+                {
+                    SetEnglishMannaContents();
+                }
+                else
+                {
+                    SetKoreanMannaContents();
+                }
+            };
+            await Navigation.PushAsync(settingPage);
+        }
+
+        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             var mannaContent = ((TappedEventArgs)e).Parameter as MannaContent;
             var selected = !mannaContent.Selected;
@@ -273,7 +241,109 @@ namespace OneDayManna.Views
             }
         }
 
-        async Task ResetSelection()
+        private async void OnCopyCliked(object sender, EventArgs e)
+        {
+            var selectedVersesText = GetSelectedMannaShareVersesText();
+            var selectedContentsText = GetSelectedMannaShareContentsText();
+
+            await ResetSelection();
+
+            await Clipboard.SetTextAsync(selectedContentsText);
+
+            string title = "";
+            string ok = "";
+            if (AppManager.GetCurrentLanguage() == Language.English.ToString())
+            {
+                title = "Copied to clipboard";
+                ok = "Ok";
+            }
+            else
+            {
+                title = "클립보드에 복사됨";
+                ok = "확인";
+            }
+
+            await DisplayAlert(title, selectedVersesText, ok);
+        }
+
+        private async void OnShareCliked(object sender, EventArgs e)
+        {
+            var selectedContentsText = GetSelectedMannaShareContentsText();
+            await ResetSelection();
+
+            string title = "";
+            if (AppManager.GetCurrentLanguage() == Language.English.ToString())
+            {
+                title = "Share";
+            }
+            else
+            {
+                title = "공유";
+            }
+
+            await Share.RequestAsync(new ShareTextRequest
+            {
+                Text = DateTime.Today.ToString("yy-MM-dd") + "\n\n" + selectedContentsText,
+                Title = title
+            });
+        }
+
+        private string GetSelectedMannaShareVersesText()
+        {
+            try
+            {
+                var selectedVersesText = string.Join(", ", selectedContentList.Select(x => $"{x.BookAndJang}:{x.Jeol}").ToArray());
+                Debug.WriteLine(selectedVersesText);
+                return selectedVersesText;
+            }
+            catch (Exception ex)
+            {
+                AppManager.PrintException("GetSelectedMannaShare Verses Text()", ex.Message);
+                return string.Empty;
+            }
+        }
+
+        private string GetSelectedMannaShareContentsText()
+        {
+            if (!(BindingContext is MainPageViewModel mainPageViewModel)) return string.Empty;
+
+            try
+            {
+                var selectedContentsText = string.Join("\n", selectedContentList.Select(x => $"{x.BookAndJang}:{x.Jeol} {x.MannaString}").ToArray());
+
+                if (viewModel?.IsAllSelected ?? false)
+                {
+                    var contentsTextWithOnlyJeol = string.Join("\n", selectedContentList.Select(x => $"{x.Jeol} {x.MannaString}").ToArray());
+                    selectedContentsText = $"{viewModel.Range}\n{contentsTextWithOnlyJeol}";
+                }
+
+                Debug.WriteLine(selectedContentsText);
+                return selectedContentsText;
+            }
+            catch (Exception ex)
+            {
+                AppManager.PrintException("GetSelectedMannaShare Contents Text()", ex.Message);
+                return string.Empty;
+            }
+        }
+
+        private void SetEnglishMannaContents()
+        {
+            if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
+
+            mainPageViewModel.MannaContents = MannaDataManager.EnglishMannaContents;
+            mainPageViewModel.Range = MannaDataManager.JsonOtherLanguageManna.Reference;
+        }
+
+        private void SetKoreanMannaContents()
+        {
+            if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
+
+            mainPageViewModel.MannaContents = MannaDataManager.KoreanMannaContents;
+            mainPageViewModel.Range = MannaDataManager.JsonMannaData.Verse;
+        }
+
+        private async Task ResetSelection()
         {
             try
             {

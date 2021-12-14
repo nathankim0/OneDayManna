@@ -24,7 +24,9 @@
         <ffimageloading:CachedImage
             x:Name="bacgroundCachedImage"
             Aspect="AspectFill"
+            CacheType="None"
             HorizontalOptions="Fill"
+            Source="{Binding CurrentImageSource}"
             VerticalOptions="Fill" />
 
         <BoxView
@@ -101,42 +103,96 @@
             BackgroundColor="Transparent"
             HorizontalOptions="End"
             Orientation="Horizontal"
+            SizeChanged="optionsStackLayout_SizeChanged"
             VerticalOptions="Start">
 
             <ImageButton
+                x:Name="captureButton"
+                Padding="6"
+                BackgroundColor="{AppThemeBinding Dark=Black,
+                                                  Light=White}"
+                BorderColor="Transparent"
+                BorderWidth="1"
+                Clicked="OnCaptureButtonClicked"
+                CornerRadius="20"
+                HeightRequest="40"
+                VerticalOptions="Start"
+                WidthRequest="40">
+                <ImageButton.Source>
+                    <FontImageSource
+                        FontFamily="materialdesignicons"
+                        Glyph="{x:Static root:FontIcons.Camera}"
+                        Size="30"
+                        Color="{AppThemeBinding Dark=White,
+                                                Light=Black}" />
+                </ImageButton.Source>
+            </ImageButton>
+
+            <ImageButton
+                x:Name="downloadButton"
+                Margin="4,0,0,0"
+                Padding="6"
+                BackgroundColor="{AppThemeBinding Dark=Black,
+                                                  Light=White}"
+                BorderColor="Transparent"
+                Clicked="OnDownloadButtonClicked"
+                CornerRadius="20"
+                HeightRequest="40"
+                VerticalOptions="Start"
+                WidthRequest="40">
+                <ImageButton.Source>
+                    <FontImageSource
+                        FontFamily="materialdesignicons"
+                        Glyph="{x:Static root:FontIcons.Download}"
+                        Size="30"
+                        Color="{AppThemeBinding Dark=White,
+                                                Light=Black}" />
+                </ImageButton.Source>
+            </ImageButton>
+
+            <ImageButton
                 x:Name="selectButton"
-                Padding="3"
-                BackgroundColor="Transparent"
+                Margin="4,0,0,0"
+                Padding="6"
+                BackgroundColor="{AppThemeBinding Dark=Black,
+                                                  Light=White}"
+                BorderColor="Transparent"
                 Clicked="OnSelectAllButtonClicked"
-                HorizontalOptions="EndAndExpand"
-                VerticalOptions="Start">
+                CornerRadius="20"
+                HeightRequest="40"
+                VerticalOptions="Start"
+                WidthRequest="40">
                 <ImageButton.Source>
                     <FontImageSource
                         FontFamily="materialdesignicons"
                         Glyph="{Binding IsAllSelected, Converter={x:StaticResource AllSelectIconConverter}}"
                         Size="30"
-                        Color="#F1E3AD" />
+                        Color="{AppThemeBinding Dark=White,
+                                                Light=Black}" />
                 </ImageButton.Source>
             </ImageButton>
 
             <ImageButton
                 x:Name="settingButton"
-                Padding="3"
-                BackgroundColor="Transparent"
+                Margin="4,0,0,0"
+                Padding="6"
+                BackgroundColor="{AppThemeBinding Dark=Black,
+                                                  Light=White}"
+                BorderColor="Transparent"
                 Clicked="OnSettingClicked"
-                HorizontalOptions="End"
-                VerticalOptions="Start">
+                CornerRadius="20"
+                HeightRequest="40"
+                VerticalOptions="Start"
+                WidthRequest="40">
                 <ImageButton.Source>
                     <FontImageSource
                         FontFamily="materialdesignicons"
                         Glyph="{x:Static root:FontIcons.DotsVertical}"
                         Size="34"
-                        Color="#F1E3AD" />
+                        Color="{AppThemeBinding Dark=White,
+                                                Light=Black}" />
                 </ImageButton.Source>
             </ImageButton>
-
         </StackLayout>
-
     </Grid>
-
 </ContentPage>

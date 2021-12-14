@@ -16,3 +16,4 @@
 /Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/OneDayManna.dll
 /Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/ref/OneDayManna.dll
 /Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/OneDayManna.pdb
+/Users/nathan-kim/Projects/OneDayManna/OneDayManna/obj/Release/netstandard2.1/Popups/LoadingPopup.xaml.g.cs

@@ -25,5 +25,8 @@ namespace OneDayManna
 
         private bool isAllSelected = false;
         public bool IsAllSelected { get => isAllSelected; set => SetProperty(ref isAllSelected, value); }
+
+        private ImageSource imageSource = ImageSource.FromFile("image1.jpg");
+        public ImageSource CurrentImageSource { get => imageSource; set => SetProperty(ref imageSource, value); }
     }
 }

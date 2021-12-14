@@ -15,8 +15,12 @@ namespace OneDayManna
         private readonly HttpClient _client;
         private static readonly string bibleApiEndpoint = "https://bible-api.com/";
 
+        Random random;
+
         public RestService()
         {
+            random = new Random();
+
             _client = new HttpClient(new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => { return true; }
@@ -86,9 +90,9 @@ namespace OneDayManna
             {
                 AppManager.PrintStartText("GetRandomImageStream()");
 
-                var random = new Random();
+                var imageUrl = Constants.IMAGE_API_ENDPOINT + random.Next(1, 1000);
 
-                var response = await _client.GetAsync(new Uri(Constants.IMAGE_API_ENDPOINT + random.Next()));
+                var response = await _client.GetAsync(new Uri(imageUrl));
                 if (response.IsSuccessStatusCode)
                 {
                     var stream = await response.Content.ReadAsStreamAsync();

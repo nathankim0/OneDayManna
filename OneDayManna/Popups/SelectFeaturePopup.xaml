@@ -25,7 +25,7 @@
 
     <yummy:PancakeView
         Margin="15"
-        Padding="25"
+        Padding="35,25,35,25"
         BackgroundColor="#CC355C7D"
         CornerRadius="23"
         HeightRequest="46"

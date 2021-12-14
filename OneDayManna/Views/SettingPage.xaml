@@ -150,6 +150,7 @@
 
                 <Picker
                     x:Name="languagePicker"
+                    FontFamily="batang"
                     HorizontalOptions="Fill"
                     SelectedIndexChanged="OnLanguagePickerSelectedIndexChanged">
                     <Picker.ItemsSource>
