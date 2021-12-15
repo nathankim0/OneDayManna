@@ -4,6 +4,7 @@ using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
+using Android.Gms.Ads;
 
 namespace OneDayManna.Droid
 {
@@ -20,6 +21,8 @@ namespace OneDayManna.Droid
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
 
             StatusBar.Activity = this;
+
+            MobileAds.Initialize(ApplicationContext);
 
             LoadApplication(new App());
         }

@@ -118,7 +118,6 @@
                     </StackLayout>
                 </Grid>
 
-
                 <Label
                     x:Name="fontTitleLabel"
                     Margin="0,40,0,0"
@@ -137,6 +136,7 @@
                     MaximumTrackColor="{AppThemeBinding Dark=LightGray,
                                                         Light=Gray}"
                     Minimum="17"
+                    MinimumTrackColor="DeepPink"
                     ValueChanged="Slider_ValueChanged" />
 
                 <Label

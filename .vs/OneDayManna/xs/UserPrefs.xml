@@ -4,14 +4,18 @@
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="OneDayManna" expanded="True" selected="True">
-            <Node name="OneDayManna" expanded="True" />
+          <Node name="OneDayManna" expanded="True">
+            <Node name="OneDayManna" expanded="True">
+              <Node name="Views" expanded="True">
+                <Node name="MainPage.xaml" selected="True" />
+              </Node>
+            </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.OneDayManna.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.E91773F1-C51A-4895-B3E3-4BEBF968D23D" />
+  <MonoDevelop.Ide.ItemProperties.OneDayManna.iOS automaticSigning="False" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.F4FF582C-8C41-47C2-AA34-3A2BD70C77C5" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

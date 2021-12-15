@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ColorPicker.iOS;
 using Foundation;
+using Google.MobileAds;
 using UIKit;
 
 namespace OneDayManna.iOS
@@ -27,8 +28,12 @@ namespace OneDayManna.iOS
             ColorPickerEffects.Init();
             global::Xamarin.Forms.Forms.Init();
 
+            MobileAds.SharedInstance.Start(CompletionHandler);
+
             LoadApplication(new App());
             return base.FinishedLaunching(app, options);
         }
+
+        private void CompletionHandler(InitializationStatus status) { }
     }
 }

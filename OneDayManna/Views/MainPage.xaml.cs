@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using MarcTron.Plugin;
 using OneDayManna.Controls;
 using OneDayManna.Popups;
 using Rg.Plugins.Popup.Extensions;
@@ -28,6 +29,15 @@ namespace OneDayManna.Views
             SelectFeaturePopup.Instance.CopyClicked += OnCopyCliked;
             SelectFeaturePopup.Instance.ShareClicked += OnShareCliked;
 
+            if (Constants.IsDeviceIOS)
+            {
+                CrossMTAdmob.Current.LoadInterstitial("ca-app-pub-8018732227937375/8481038983");
+            }
+            else
+            {
+                CrossMTAdmob.Current.LoadInterstitial("ca-app-pub-8018732227937375/5527572586");
+            }
+
             viewModel.IsRefreshing = true;
         }
 
@@ -44,7 +54,7 @@ namespace OneDayManna.Views
 
         private void optionsStackLayout_SizeChanged(object sender, EventArgs e)
         {
-            innerStackLayout.Margin = new Thickness(0, innerStackLayout.Y + 50, 0, 0);
+            innerStackLayout.Margin = new Thickness(0, innerStackLayout.Y + 70, 0, 0);
         }
 
         private async void RefreshView_Refreshing(object sender, EventArgs e)
@@ -115,6 +125,8 @@ namespace OneDayManna.Views
             }
 
             isDownloading = false;
+
+            CrossMTAdmob.Current.ShowInterstitial();
         }
 
         private bool isCapturing;
@@ -125,10 +137,12 @@ namespace OneDayManna.Views
             isCapturing = true;
 
             optionsStackLayout.IsVisible = false;
+            admobBanner.IsVisible = false;
 
             var screenshot = await Screenshot.CaptureAsync();
 
             optionsStackLayout.IsVisible = true;
+            admobBanner.IsVisible = true;
 
             await Navigation.PushPopupAsync(LoadingPopup.Instance);
 
@@ -150,6 +164,8 @@ namespace OneDayManna.Views
             }
 
             isCapturing = false;
+
+            CrossMTAdmob.Current.ShowInterstitial();
         }
 
         private async void OnSelectAllButtonClicked(object sender, EventArgs e)

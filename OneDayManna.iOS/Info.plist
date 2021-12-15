@@ -25,7 +25,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.jinyeob.OneDayManna</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>1</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
@@ -35,8 +35,12 @@
 	<key>CFBundleDisplayName</key>
 	<string>하루만나</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1</string>
+	<string>1.0</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>하루만나 adds images to your photo library</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-8018732227937375~5105557294</string>
+	<key>GADIsAdManagerApp</key>
+	<true/>
 </dict>
 </plist>

@@ -23,6 +23,7 @@
     <PackageReference Include="ColorPicker.Xamarin.Forms" Version="1.3.4.21" />
     <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.14" />
     <PackageReference Include="Xamarin.Forms.PancakeView" Version="2.3.0.759" />
+    <PackageReference Include="MarcTron.Admob" Version="1.6.8" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Newtonsoft.Json" />
@@ -42,6 +43,7 @@
     <None Remove="Interfaces\" />
     <None Remove="Xamarin.Forms.PancakeView" />
     <None Remove="Resources\materialdesignicons.ttf" />
+    <None Remove="MarcTron.Admob" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
