@@ -157,6 +157,8 @@
                         <x:Array Type="{x:Type x:String}">
                             <x:String>한국어</x:String>
                             <x:String>English</x:String>
+                            <x:String>Español</x:String>
+                            <x:String>语言</x:String>
                         </x:Array>
                     </Picker.ItemsSource>
                 </Picker>

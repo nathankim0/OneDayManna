@@ -49,6 +49,12 @@
     <WarningLevel>4</WarningLevel>
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <AndroidKeyStore>True</AndroidKeyStore>
+    <AndroidSigningKeyStore>/Users/nathan-kim/onedaymanna.keystore</AndroidSigningKeyStore>
+    <AndroidSigningStorePass>960812!!</AndroidSigningStorePass>
+    <AndroidPackageFormat>aab</AndroidPackageFormat>
+    <AndroidSigningKeyAlias>onedaymanna</AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass>960812!!</AndroidSigningKeyPass>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />

@@ -10,8 +10,12 @@ namespace OneDayManna
     {
         public static ObservableRangeCollection<MannaContent> KoreanMannaContents = new ObservableRangeCollection<MannaContent>();
         public static ObservableRangeCollection<MannaContent> EnglishMannaContents = new ObservableRangeCollection<MannaContent>();
-        public static JsonMannaModel JsonMannaData = new JsonMannaModel();
-        public static JsonMannaOtherLanguageModel JsonOtherLanguageManna = new JsonMannaOtherLanguageModel();
+        public static ObservableRangeCollection<MannaContent> SpanishMannaContents = new ObservableRangeCollection<MannaContent>();
+        public static ObservableRangeCollection<MannaContent> ChineseMannaContents = new ObservableRangeCollection<MannaContent>();
+        public static KoreanManna KoreanMannaData = new KoreanManna();
+        public static EnglishManna EnglishMannaData = new EnglishManna();
+        public static SpanishManna SpanishMannaData = new SpanishManna();
+        public static ChineseManna ChineseMannaData = new ChineseManna();
 
         public static string Today { get; set; } = DateTime.Now.ToString("yyyy년 MM월 dd일 (ddd)");
         public static string DisplayDateRange { get; set; } = DateTime.Now.ToString("MM/dd");
@@ -38,17 +42,28 @@ namespace OneDayManna
 
             try
             {
-                JsonMannaData = await RestService.Instance.GetMannaDataAsync(endPoint);
+                KoreanMannaData = await RestService.Instance.GetMannaDataAsync(endPoint);
 
-                MannaShareRange = $"만나: {JsonMannaData.Verse}";
+                MannaShareRange = $"만나: {KoreanMannaData.Verse}";
 
                 var bookAndJang = ExtractBookAndJang();
 
                 SetBibleWebAndAppUrl(bookAndJang);
-                SetMannaCollection(JsonMannaData, bookAndJang);
+                SetMannaCollection(KoreanMannaData, bookAndJang);
 
-                JsonOtherLanguageManna = await RestService.Instance.GetMultilanguageManna(BookKor, Jang, JeolRange);
-                SetMannaCollection(JsonOtherLanguageManna);
+                var englishTask = RestService.Instance.GetEnglishManna(BookKor, Jang, JeolRange);
+                var spanishTask = RestService.Instance.GetSpanishManna(BookKor, Jang, JeolRange);
+                var chineseTask = RestService.Instance.GetChineseManna(BookKor, Jang, JeolRange);
+
+                await Task.WhenAll(englishTask, spanishTask, chineseTask);
+
+                EnglishMannaData = englishTask.Result;
+                SpanishMannaData = spanishTask.Result;
+                ChineseMannaData = chineseTask.Result;
+
+                SetMannaCollection(EnglishMannaData);
+                SetMannaCollection(SpanishMannaData);
+                SetMannaCollection(ChineseMannaData);
 
                 AppManager.PrintCompleteText("GetManna()");
 
@@ -61,7 +76,7 @@ namespace OneDayManna
             }
         }
 
-        private static void SetMannaCollection(JsonMannaModel JsonMannaData, string bookAndJang)
+        private static void SetMannaCollection(KoreanManna JsonMannaData, string bookAndJang)
         {
             var mannaContents = new List<MannaContent>();
             var allMannaTexts = string.Empty;
@@ -91,7 +106,7 @@ namespace OneDayManna
             AllMannaTexts = allMannaTexts;
         }
 
-        private static void SetMannaCollection(JsonMannaOtherLanguageModel JsonMannaData)
+        private static void SetMannaCollection(EnglishManna JsonMannaData)
         {
             var mannaContents = new List<MannaContent>();
 
@@ -106,6 +121,40 @@ namespace OneDayManna
             }
 
             EnglishMannaContents = new ObservableRangeCollection<MannaContent>(mannaContents);
+        }
+
+        private static void SetMannaCollection(SpanishManna JsonMannaData)
+        {
+            var mannaContents = new List<MannaContent>();
+
+            foreach (var node in JsonMannaData.Results.Content)
+            {
+                mannaContents.Add(new MannaContent
+                {
+                    BookAndJang = $"{node.Book}{node.Chapter}",
+                    Jeol = node.Verse,
+                    MannaString = node.Text,
+                });
+            }
+
+            SpanishMannaContents = new ObservableRangeCollection<MannaContent>(mannaContents);
+        }
+
+        private static void SetMannaCollection(ChineseManna JsonMannaData)
+        {
+            var mannaContents = new List<MannaContent>();
+
+            foreach (var node in JsonMannaData.Results.Content)
+            {
+                mannaContents.Add(new MannaContent
+                {
+                    BookAndJang = $"{node.Book}{node.Chapter}",
+                    Jeol = node.Verse,
+                    MannaString = node.Text,
+                });
+            }
+
+            ChineseMannaContents = new ObservableRangeCollection<MannaContent>(mannaContents);
         }
 
         private static void SetBibleWebAndAppUrl(string bookAndJang)
@@ -153,7 +202,7 @@ namespace OneDayManna
             var tmpVerseNumRange = "1-10";
             try
             {
-                tmpVerseNumRange = Regex.Replace(JsonMannaData.Verse.Substring(JsonMannaData.Verse.IndexOf(":") + 1), "~", "-");
+                tmpVerseNumRange = Regex.Replace(KoreanMannaData.Verse.Substring(KoreanMannaData.Verse.IndexOf(":") + 1), "~", "-");
             }
             catch (Exception e)
             {
@@ -168,7 +217,7 @@ namespace OneDayManna
             var tmpBibleAt = "창1";
             try
             {
-                tmpBibleAt = JsonMannaData.Verse.Substring(0, JsonMannaData.Verse.IndexOf(":"));
+                tmpBibleAt = KoreanMannaData.Verse.Substring(0, KoreanMannaData.Verse.IndexOf(":"));
             }
             catch (Exception e)
             {

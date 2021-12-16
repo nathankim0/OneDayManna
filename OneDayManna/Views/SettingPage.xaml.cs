@@ -29,12 +29,10 @@ namespace OneDayManna.Views
             if (currentLanguage == Language.Korean.ToString())
             {
                 fontTitleLabel.Text = "폰트 크기";
-                languageTitleLabel.Text = "Language";
             }
-            else if(currentLanguage == Language.English.ToString())
+            else
             {
                 fontTitleLabel.Text = "Font Size";
-                languageTitleLabel.Text = "언어";
             }
         }
 
@@ -83,6 +81,8 @@ namespace OneDayManna.Views
             {
                 "Korean" => 0,
                 "English" => 1,
+                "Spanish" => 2,
+                "Chinese" => 3,
                 _ => 0,
             };
             ;
@@ -95,6 +95,8 @@ namespace OneDayManna.Views
             {
                 0 => Language.Korean,
                 1 => Language.English,
+                2 => Language.Spanish,
+                3 => Language.Chinese,
                 _ => Language.Korean,
             };
             Preferences.Set("CurrentLanguage", selectedLanguage.ToString());

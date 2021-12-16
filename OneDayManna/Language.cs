@@ -4,6 +4,8 @@ namespace OneDayManna
     public enum Language
     {
         Korean,
-        English
+        English,
+        Spanish,
+        Chinese
     }
 }

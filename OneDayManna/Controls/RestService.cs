@@ -13,8 +13,6 @@ namespace OneDayManna
         public static RestService Instance => _instance ?? (_instance = new RestService());
 
         private readonly HttpClient _client;
-        private static readonly string bibleApiEndpoint = "https://bible-api.com/";
-
         Random random;
 
         public RestService()
@@ -27,9 +25,9 @@ namespace OneDayManna
             });
         }
 
-        public async Task<JsonMannaModel> GetMannaDataAsync(string uri)
+        public async Task<KoreanManna> GetMannaDataAsync(string uri)
         {
-            var mannaData = new JsonMannaModel();
+            var mannaData = new KoreanManna();
 
             try
             {
@@ -37,7 +35,7 @@ namespace OneDayManna
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    mannaData = JsonConvert.DeserializeObject<JsonMannaModel>(content);
+                    mannaData = JsonConvert.DeserializeObject<KoreanManna>(content);
 
                     Console.WriteLine($"@@@@@{mannaData.Verse}");
                     foreach(var node in mannaData.Contents)
@@ -54,9 +52,19 @@ namespace OneDayManna
             return mannaData;
         }
 
-        public async Task<JsonMannaOtherLanguageModel> GetMultilanguageManna(string bookKor, int jang, string jeolRange)
+        private string GetApiUrl(string bible, string bookKor, int jang, string jeolRange)
         {
-            var url = $"{bibleApiEndpoint}{bookKor.BibleBookKorToEng()}+{jang}:{jeolRange}?translation=kjv";
+            // bible : kjv
+            // bookKor : 창
+            // jang : 1
+            // jeolRange : 1-10
+            var endpoint = "https://api.biblesupersearch.com/";
+            return $"{endpoint}api?bible={bible}&reference={bookKor.BibleBookKorToEng()}{jang}:{jeolRange}&data_format=minimal";
+        }
+
+        public async Task<EnglishManna> GetEnglishManna(string bookKor, int jang, string jeolRange)
+        {
+            var url = $"https://bible-api.com/{bookKor.BibleBookKorToEng()}+{jang}:{jeolRange}?translation=kjv";
             try
             {
                 var response = await _client.GetAsync(url);
@@ -64,7 +72,7 @@ namespace OneDayManna
                 {
                     var content = await response.Content.ReadAsStringAsync();
                     Debug.WriteLine(content);
-                    var mannaData = JsonConvert.DeserializeObject<JsonMannaOtherLanguageModel>(content);
+                    var mannaData = JsonConvert.DeserializeObject<EnglishManna>(content);
                     foreach(var node in mannaData.Verses)
                     {
                         try
@@ -82,8 +90,61 @@ namespace OneDayManna
             {
                 Debug.WriteLine("\tERROR {0}", ex.Message);
             }
-            return new JsonMannaOtherLanguageModel();
+            return new EnglishManna();
         }
+
+        public async Task<SpanishManna> GetSpanishManna(string bookKor, int jang, string jeolRange)
+        {
+            var url = GetApiUrl("rv_1909", bookKor, jang, jeolRange);
+            try
+            {
+                var response = await _client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Debug.WriteLine(content);
+                    var mannaData = JsonConvert.DeserializeObject<SpanishManna>(content);
+                    foreach (var node in mannaData.Results.Content)
+                    {
+                        Debug.WriteLine(node.Text);
+                    }
+
+                    return mannaData;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("\tERROR {0}", ex.Message);
+            }
+            return new SpanishManna();
+        }
+
+        public async Task<ChineseManna> GetChineseManna(string bookKor, int jang, string jeolRange)
+        {
+            var url = GetApiUrl("ckjv_sdt", bookKor, jang, jeolRange);
+            try
+            {
+                var response = await _client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Debug.WriteLine(content);
+                    var mannaData = JsonConvert.DeserializeObject<ChineseManna>(content);
+                    foreach (var node in mannaData.Results.Content)
+                    {
+                        Debug.WriteLine(node.Text);
+                    }
+
+                    return mannaData;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("\tERROR {0}", ex.Message);
+            }
+            return new ChineseManna();
+        }
+
         public async Task<Stream> GetRandomImageStream()
         {
             try

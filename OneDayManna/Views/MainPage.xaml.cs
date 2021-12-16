@@ -88,13 +88,21 @@ namespace OneDayManna.Views
             }
             else
             {
-                if (AppManager.GetCurrentLanguage() == Language.English.ToString())
+                if (AppManager.GetCurrentLanguage() == Language.Korean.ToString())
                 {
-                    SetEnglishMannaContents();
+                    SetKoreanMannaContents();
+                }
+                else if(AppManager.GetCurrentLanguage() == Language.Spanish.ToString())
+                {
+                    SetSpanishMannaContents();
+                }
+                else if (AppManager.GetCurrentLanguage() == Language.Chinese.ToString())
+                {
+                    SetChineseMannaContents();
                 }
                 else
                 {
-                    SetKoreanMannaContents();
+                    SetEnglishMannaContents();
                 }
             }
             optionsStackLayout.IsVisible = true;
@@ -113,15 +121,15 @@ namespace OneDayManna.Views
 
             await Navigation.RemovePopupPageAsync(LoadingPopup.Instance);
 
-            var isEnglish = AppManager.GetCurrentLanguage() == Language.English.ToString();
+            var isKorean = AppManager.GetCurrentLanguage() == Language.Korean.ToString();
 
             if (!result)
             {
-                await Application.Current.MainPage.DisplayAlert(isEnglish ? "Failed to save image" : "이미지 저장 실패", isEnglish ? "Image could not be saved. Try again!" : "이미지 저장에 실패했습니다. 다시 시도해보세요!", isEnglish ? "OK" : "확인");
+                await Application.Current.MainPage.DisplayAlert(isKorean ? "이미지 저장 실패" : "Failed to save image", isKorean ? "이미지 저장에 실패했습니다. 다시 시도해보세요!" : "Image could not be saved. Try again!", isKorean ? "확인" : "OK");
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert(isEnglish ? "Image saved" : "이미지 저장 완료", isEnglish ? "Check out the photo library" : "앨범을 확인해보세요!", isEnglish ? "OK" : "확인");
+                await Application.Current.MainPage.DisplayAlert(isKorean ? "이미지 저장 완료" : "Image saved", isKorean ? "앨범을 확인해보세요!" : "Check out the photo library", isKorean ? "확인" : "OK");
             }
 
             isDownloading = false;
@@ -152,15 +160,15 @@ namespace OneDayManna.Views
 
             await Navigation.RemovePopupPageAsync(LoadingPopup.Instance);
 
-            var isEnglish = AppManager.GetCurrentLanguage() == Language.English.ToString();
+            var isKorean = AppManager.GetCurrentLanguage() == Language.Korean.ToString();
 
             if (!result)
             {
-                await Application.Current.MainPage.DisplayAlert(isEnglish ? "Failed to save screenshot" : "스크린샷 저장 실패", isEnglish ? "Image could not be saved. Try again!" : "이미지 저장에 실패했습니다. 다시 시도해보세요!", isEnglish ? "OK" : "확인");
+                await Application.Current.MainPage.DisplayAlert(isKorean ? "스크린샷 저장 실패" : "Failed to save screenshot", isKorean ? "이미지 저장에 실패했습니다. 다시 시도해보세요!" : "Image could not be saved. Try again!", isKorean ? "확인" : "OK");
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert(isEnglish ? "Screenshot saved" : "스크린샷 저장 완료", isEnglish ? "Check out the photo library" : "앨범을 확인해보세요!", isEnglish ? "OK" : "확인");
+                await Application.Current.MainPage.DisplayAlert(isKorean ? "스크린샷 저장 완료" : "Screenshot saved", isKorean ? "앨범을 확인해보세요!" : "Check out the photo library", isKorean ? "확인" : "OK");
             }
 
             isCapturing = false;
@@ -195,13 +203,21 @@ namespace OneDayManna.Views
             var settingPage = new SettingPage();
             settingPage.LanguageChanged += (object sender, Language language) =>
             {
-                if (language == Language.English)
+                if (language == Language.Korean)
                 {
-                    SetEnglishMannaContents();
+                    SetKoreanMannaContents();
+                }
+                else if(language == Language.Spanish)
+                {
+                    SetSpanishMannaContents();
+                }
+                else if (language == Language.Chinese)
+                {
+                    SetChineseMannaContents();
                 }
                 else
                 {
-                    SetKoreanMannaContents();
+                    SetEnglishMannaContents();
                 }
             };
             await Navigation.PushAsync(settingPage);
@@ -268,15 +284,15 @@ namespace OneDayManna.Views
 
             string title = "";
             string ok = "";
-            if (AppManager.GetCurrentLanguage() == Language.English.ToString())
-            {
-                title = "Copied to clipboard";
-                ok = "Ok";
-            }
-            else
+            if (AppManager.GetCurrentLanguage() == Language.Korean.ToString())
             {
                 title = "클립보드에 복사됨";
                 ok = "확인";
+            }
+            else
+            {
+                title = "Copied to clipboard";
+                ok = "Ok";
             }
 
             await DisplayAlert(title, selectedVersesText, ok);
@@ -288,13 +304,13 @@ namespace OneDayManna.Views
             await ResetSelection();
 
             string title = "";
-            if (AppManager.GetCurrentLanguage() == Language.English.ToString())
+            if (AppManager.GetCurrentLanguage() == Language.Korean.ToString())
             {
-                title = "Share";
+                title = "공유";
             }
             else
             {
-                title = "공유";
+                title = "Share";
             }
 
             await Share.RequestAsync(new ShareTextRequest
@@ -348,7 +364,7 @@ namespace OneDayManna.Views
             if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
 
             mainPageViewModel.MannaContents = MannaDataManager.EnglishMannaContents;
-            mainPageViewModel.Range = MannaDataManager.JsonOtherLanguageManna.Reference;
+            mainPageViewModel.Range = MannaDataManager.EnglishMannaData.Reference;
         }
 
         private void SetKoreanMannaContents()
@@ -356,7 +372,23 @@ namespace OneDayManna.Views
             if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
 
             mainPageViewModel.MannaContents = MannaDataManager.KoreanMannaContents;
-            mainPageViewModel.Range = MannaDataManager.JsonMannaData.Verse;
+            mainPageViewModel.Range = MannaDataManager.KoreanMannaData.Verse;
+        }
+
+        private void SetSpanishMannaContents()
+        {
+            if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
+
+            mainPageViewModel.MannaContents = MannaDataManager.SpanishMannaContents;
+            mainPageViewModel.Range = MannaDataManager.EnglishMannaData.Reference;
+        }
+
+        private void SetChineseMannaContents()
+        {
+            if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
+
+            mainPageViewModel.MannaContents = MannaDataManager.ChineseMannaContents;
+            mainPageViewModel.Range = MannaDataManager.EnglishMannaData.Reference;
         }
 
         private async Task ResetSelection()
