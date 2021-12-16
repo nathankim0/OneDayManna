@@ -19,9 +19,9 @@ namespace OneDayManna.Views
             sampleLabel.TextColor = AppManager.GetCurrentTextColor();
             backgroundDimBoxView.BackgroundColor = AppManager.GetCurrentBackgroundDimColor();
             sampleLabel.FontSize = fontSizeSlider.Value;
-            languagePicker.SelectedIndex = GetLanguageSelectedIndex();
+            //languagePicker.SelectedIndex = GetLanguageSelectedIndex();
 
-            SetTextByLanguage(AppManager.GetCurrentLanguage());
+            SetTextByLanguage(AppManager.GetCurrentLanguageString());
         }
 
         private void SetTextByLanguage(string currentLanguage)
@@ -75,44 +75,44 @@ namespace OneDayManna.Views
             await Navigation.PopAsync();
         }
 
-        private int GetLanguageSelectedIndex()
-        {
-            return AppManager.GetCurrentLanguage() switch
-            {
-                "Korean" => 0,
-                "English" => 1,
-                "Spanish" => 2,
-                "Chinese" => 3,
-                "Japanese" => 4,
-                "German" => 5,
-                "French" => 6,
-                "Hindi" => 7,
-                _ => 0,
-            };
-            ;
-        }
+        //private int GetLanguageSelectedIndex()
+        //{
+        //    return AppManager.GetCurrentLanguage() switch
+        //    {
+        //        "Korean" => 0,
+        //        "English" => 1,
+        //        "Spanish" => 2,
+        //        "Chinese" => 3,
+        //        "Japanese" => 4,
+        //        "German" => 5,
+        //        "French" => 6,
+        //        "Hindi" => 7,
+        //        _ => 0,
+        //    };
+        //    ;
+        //}
 
-        private void OnLanguagePickerSelectedIndexChanged(object sender, EventArgs e)
-        {
-            var picker = (Picker)sender;
-            var selectedLanguage = picker.SelectedIndex switch
-            {
-                0 => Language.Korean,
-                1 => Language.English,
-                2 => Language.Spanish,
-                3 => Language.Chinese,
-                4 => Language.Japanese,
-                5 => Language.German,
-                6 => Language.French,
-                7 => Language.Hindi,
-                _ => Language.Korean,
-            };
-            Preferences.Set("CurrentLanguage", selectedLanguage.ToString());
+        //private void OnLanguagePickerSelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    var picker = (Picker)sender;
+        //    var selectedLanguage = picker.SelectedIndex switch
+        //    {
+        //        0 => Language.Korean,
+        //        1 => Language.English,
+        //        2 => Language.Spanish,
+        //        3 => Language.Chinese,
+        //        4 => Language.Japanese,
+        //        5 => Language.German,
+        //        6 => Language.French,
+        //        7 => Language.Hindi,
+        //        _ => Language.Korean,
+        //    };
+        //    Preferences.Set("CurrentLanguage", selectedLanguage.ToString());
 
-            SetTextByLanguage(AppManager.GetCurrentLanguage());
+        //    SetTextByLanguage(AppManager.GetCurrentLanguage());
 
-            LanguageChanged?.Invoke(this, selectedLanguage);
-        }
+        //    LanguageChanged?.Invoke(this, selectedLanguage);
+        //}
 
         void dimTitleButton_Pressed(System.Object sender, System.EventArgs e)
         {
@@ -136,6 +136,13 @@ namespace OneDayManna.Views
         {
             var button = (ImageButton)sender;
             button.Opacity = 1;
+        }
+
+        async void languageTitleLabel_Clicked(System.Object sender, System.EventArgs e)
+        {
+            var onboardingPage = new OnboardingPage();
+            onboardingPage.LanguageChanged += (s, selectedLanguage) => { LanguageChanged?.Invoke(this, selectedLanguage); };
+            await Navigation.PushModalAsync(onboardingPage);
         }
     }
 }

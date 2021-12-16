@@ -5,9 +5,12 @@ using System.Threading.Tasks;
 using OneDayManna.Interfaces;
 using Java.IO;
 using Environment = Android.OS.Environment;
+using Android.OS;
+using Android.Content;
 
 [assembly: Dependency(typeof(StatusBar))]
 [assembly: Dependency(typeof(PhotoLibrary))]
+[assembly: Dependency(typeof(Vibration))]
 
 namespace OneDayManna.Droid
 {
@@ -33,7 +36,7 @@ namespace OneDayManna.Droid
 
     public class PhotoLibrary : IPhotoLibrary
     {
-    public async Task<bool> SavePhotoAsync(byte[] data, string folder, string filename)
+        public async Task<bool> SavePhotoAsync(byte[] data, string folder, string filename)
         {
             try
             {
@@ -69,4 +72,33 @@ namespace OneDayManna.Droid
             return true;
         }
     }
+
+    public class Vibration : IVibration
+    {
+        public void VibrateHeavy()
+        {
+//            try
+//            {
+//                var vibrator = (Vibrator)Android.App.Application.Context.GetSystemService(Context.VibratorService);
+
+//                if (Android.OS.Build.VERSION.SdkInt >= BuildVersionCodes.O)
+//                {
+//                    var effect = VibrationEffect.CreateOneShot(40, VibrationEffect.DefaultAmplitude);
+//                    vibrator?.Vibrate(effect);
+//                }
+//                else
+//                {
+//#pragma warning disable 618
+//                    vibrator?.Vibrate(40);
+//#pragma warning restore 618
+//                }
+//            }
+//            catch { }
+        }
+
+        public void VibrateLight()
+        {
+        }
+    }
+
 }

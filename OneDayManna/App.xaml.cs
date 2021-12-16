@@ -5,6 +5,7 @@ using System.Net.Security;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using OneDayManna.Views;
+using Xamarin.Essentials;
 
 namespace OneDayManna
 {
@@ -14,6 +15,8 @@ namespace OneDayManna
         {
             InitializeComponent();
             MainPage = new NavigationPage(new MainPage());
+
+            VersionTracking.Track();
         }
 
         protected override void OnStart()

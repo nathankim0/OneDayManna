@@ -32,6 +32,14 @@ namespace OneDayManna
         public static string AllMannaTexts { get; set; } = "";
         public static string MannaShareRange { get; set; } = "";
 
+        public static string SpanishRange { get; set; } = "";
+        public static string ChineseRange { get; set; } = "";
+        public static string JapaneseRange { get; set; } = "";
+        public static string GermanRange { get; set; } = "";
+        public static string FrenchRange { get; set; } = "";
+        public static string HindiRange { get; set; } = "";
+
+
         public static string BibleWebUrl = "";
         public static string BibleAppUrl = "";
 
@@ -61,31 +69,32 @@ namespace OneDayManna
                 SetBibleWebAndAppUrl(bookAndJang);
                 SetMannaCollection(KoreanMannaData, bookAndJang);
 
-                var englishTask = RestService.Instance.GetEnglishManna(BookKor, Jang, JeolRange);
-                var spanishTask = RestService.Instance.GetSpanishManna(BookKor, Jang, JeolRange);
-                var chineseTask = RestService.Instance.GetChineseManna(BookKor, Jang, JeolRange);
-                var japaneseTask = RestService.Instance.GetJapaneseManna(BookKor, Jang, JeolRange);
-                var germanTask = RestService.Instance.GetGermanManna(BookKor, Jang, JeolRange);
-                var frenchTask = RestService.Instance.GetFrenchManna(BookKor, Jang, JeolRange);
-                var hindiTask = RestService.Instance.GetHindiManna(BookKor, Jang, JeolRange);
+                var currentLanguage = (Language)Enum.Parse(typeof(Language), AppManager.GetCurrentLanguageString());
 
-                await Task.WhenAll(englishTask, spanishTask, chineseTask, japaneseTask, germanTask, frenchTask, hindiTask);
+                if (currentLanguage != Language.Korean)
+                {
+                    await GetManna(currentLanguage);
+                }
 
-                EnglishMannaData = englishTask.Result;
-                SpanishMannaData = spanishTask.Result;
-                ChineseMannaData = chineseTask.Result;
-                JapaneseMannaData = japaneseTask.Result;
-                GermanMannaData= germanTask.Result;
-                FrenchMannaData= frenchTask.Result;
-                HindiMannaData = hindiTask.Result;
+                //var englishTask = RestService.Instance.GetEnglishManna(BookKor, Jang, JeolRange);
+                //var spanishTask = RestService.Instance.GetSpanishManna(BookKor, Jang, JeolRange);
+                //var chineseTask = RestService.Instance.GetChineseManna(BookKor, Jang, JeolRange);
+                //var japaneseTask = RestService.Instance.GetJapaneseManna(BookKor, Jang, JeolRange);
+                //var germanTask = RestService.Instance.GetGermanManna(BookKor, Jang, JeolRange);
+                //var frenchTask = RestService.Instance.GetFrenchManna(BookKor, Jang, JeolRange);
+                //var hindiTask = RestService.Instance.GetHindiManna(BookKor, Jang, JeolRange);
 
-                SetMannaCollection(EnglishMannaData);
-                SetMannaCollection(SpanishMannaData);
-                SetMannaCollection(ChineseMannaData);
-                SetMannaCollection(JapaneseMannaData);
-                SetMannaCollection(GermanMannaData);
-                SetMannaCollection(FrenchMannaData);
-                SetMannaCollection(HindiMannaData);
+                //await Task.WhenAll(englishTask, spanishTask, chineseTask, japaneseTask, germanTask, frenchTask, hindiTask);
+
+                //EnglishMannaData = englishTask.Result;
+                //SpanishMannaData = spanishTask.Result;
+                //ChineseMannaData = chineseTask.Result;
+                //JapaneseMannaData = japaneseTask.Result;
+                //GermanMannaData= germanTask.Result;
+                //FrenchMannaData= frenchTask.Result;
+                //HindiMannaData = hindiTask.Result;
+
+                //await Task.WhenAll(SetMannaCollection(EnglishMannaData), SetMannaCollection(SpanishMannaData), SetMannaCollection(ChineseMannaData), SetMannaCollection(JapaneseMannaData), SetMannaCollection(GermanMannaData), SetMannaCollection(FrenchMannaData), SetMannaCollection(HindiMannaData));
 
                 AppManager.PrintCompleteText("GetManna()");
 
@@ -98,8 +107,61 @@ namespace OneDayManna
             }
         }
 
+        public static async Task<bool> GetManna(Language language)
+        {
+            try
+            {
+                if(language == Language.English)
+                {
+                    EnglishMannaData = await RestService.Instance.GetEnglishManna(BookKor, Jang, JeolRange);
+                    _ = SetMannaCollection(EnglishMannaData);
+                }
+                else if(language == Language.Spanish)
+                {
+                    SpanishMannaData = await RestService.Instance.GetSpanishManna(BookKor, Jang, JeolRange);
+                    _ = SetMannaCollection(SpanishMannaData);
+                }
+                else if (language == Language.Chinese)
+                {
+                    ChineseMannaData = await RestService.Instance.GetChineseManna(BookKor, Jang, JeolRange);
+                    _ = SetMannaCollection(ChineseMannaData);
+                }
+                else if (language == Language.Japanese)
+                {
+                    JapaneseMannaData = await RestService.Instance.GetJapaneseManna(BookKor, Jang, JeolRange);
+                    _ = SetMannaCollection(JapaneseMannaData);
+                }
+                else if (language == Language.German)
+                {
+                    GermanMannaData = await RestService.Instance.GetGermanManna(BookKor, Jang, JeolRange);
+                    _ = SetMannaCollection(GermanMannaData);
+                }
+                else if (language == Language.French)
+                {
+                    FrenchMannaData = await RestService.Instance.GetFrenchManna(BookKor, Jang, JeolRange);
+                    _ = SetMannaCollection(FrenchMannaData);
+                }
+                else if (language == Language.Hindi)
+                {
+                    HindiMannaData = await RestService.Instance.GetHindiManna(BookKor, Jang, JeolRange);
+                    _ = SetMannaCollection(HindiMannaData);
+                }
+
+                AppManager.PrintCompleteText($"GetManna {language.ToString()}");
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                AppManager.PrintException($"GetManna {language.ToString()}", e.Message);
+                return false;
+            }
+        }
+
         private static void SetMannaCollection(KoreanManna JsonMannaData, string bookAndJang)
         {
+            AppManager.PrintStartText("KoreanManna SetMannaCollection()");
+
             var mannaContents = new List<MannaContent>();
             var allMannaTexts = string.Empty;
 
@@ -126,10 +188,14 @@ namespace OneDayManna
 
             KoreanMannaContents = new ObservableRangeCollection<MannaContent>(mannaContents);
             AllMannaTexts = allMannaTexts;
+
+            AppManager.PrintCompleteText("KoreanManna SetMannaCollection()");
         }
 
-        private static void SetMannaCollection(EnglishManna JsonMannaData)
+        private static Task SetMannaCollection(EnglishManna JsonMannaData)
         {
+            AppManager.PrintStartText("EnglishManna SetMannaCollection()");
+
             var mannaContents = new List<MannaContent>();
 
             foreach (var node in JsonMannaData.Verses)
@@ -143,108 +209,154 @@ namespace OneDayManna
             }
 
             EnglishMannaContents = new ObservableRangeCollection<MannaContent>(mannaContents);
+
+            AppManager.PrintCompleteText("EnglishManna SetMannaCollection()");
+
+            return Task.CompletedTask;
         }
 
-        private static void SetMannaCollection(SpanishManna JsonMannaData)
+        private static Task SetMannaCollection(SpanishManna JsonMannaData)
         {
+            AppManager.PrintStartText("SpanishManna SetMannaCollection()");
+
             var mannaContents = new List<MannaContent>();
 
             foreach (var node in JsonMannaData.Results.Content)
             {
                 mannaContents.Add(new MannaContent
                 {
-                    BookAndJang = $"{node.Book}{node.Chapter}",
+                    BookAndJang = $"{node.BookName}{node.Chapter}",
                     Jeol = node.Verse,
                     MannaString = node.Text,
                 });
+                SpanishRange = $"{node.BookName}{node.Chapter}:{node.Verse}";
             }
 
             SpanishMannaContents = new ObservableRangeCollection<MannaContent>(mannaContents);
+
+            AppManager.PrintCompleteText("SpanishManna SetMannaCollection()");
+
+            return Task.CompletedTask;
         }
 
-        private static void SetMannaCollection(ChineseManna JsonMannaData)
+        private static Task SetMannaCollection(ChineseManna JsonMannaData)
         {
+            AppManager.PrintStartText("ChineseManna SetMannaCollection()");
+
             var mannaContents = new List<MannaContent>();
 
             foreach (var node in JsonMannaData.Results.Content)
             {
                 mannaContents.Add(new MannaContent
                 {
-                    BookAndJang = $"{node.Book}{node.Chapter}",
+                    BookAndJang = $"{node.BookName}{node.Chapter}",
                     Jeol = node.Verse,
                     MannaString = node.Text,
                 });
+                ChineseRange = $"{node.BookName}{node.Chapter}:{node.Verse}";
             }
 
             ChineseMannaContents = new ObservableRangeCollection<MannaContent>(mannaContents);
+
+            AppManager.PrintCompleteText("ChineseManna SetMannaCollection()");
+
+            return Task.CompletedTask;
         }
 
-        private static void SetMannaCollection(JapaneseManna JsonMannaData)
+        private static Task SetMannaCollection(JapaneseManna JsonMannaData)
         {
+            AppManager.PrintStartText("JapaneseManna SetMannaCollection()");
+
             var mannaContents = new List<MannaContent>();
 
             foreach (var node in JsonMannaData.Results.Content)
             {
                 mannaContents.Add(new MannaContent
                 {
-                    BookAndJang = $"{node.Book}{node.Chapter}",
+                    BookAndJang = $"{node.BookName}{node.Chapter}",
                     Jeol = node.Verse,
                     MannaString = node.Text,
                 });
+                JapaneseRange = $"{node.BookName}{node.Chapter}:{node.Verse}";
             }
 
             JapaneseMannaContents = new ObservableRangeCollection<MannaContent>(mannaContents);
+
+            AppManager.PrintCompleteText("JapaneseManna SetMannaCollection()");
+
+            return Task.CompletedTask;
         }
 
-        private static void SetMannaCollection(GermanManna JsonMannaData)
+        private static Task SetMannaCollection(GermanManna JsonMannaData)
         {
+            AppManager.PrintStartText("GermanManna SetMannaCollection()");
+
             var mannaContents = new List<MannaContent>();
 
             foreach (var node in JsonMannaData.Results.Content)
             {
                 mannaContents.Add(new MannaContent
                 {
-                    BookAndJang = $"{node.Book}{node.Chapter}",
+                    BookAndJang = $"{node.BookName}{node.Chapter}",
                     Jeol = node.Verse,
                     MannaString = node.Text,
                 });
+                GermanRange = $"{node.BookName}{node.Chapter}:{node.Verse}";
             }
 
             GermanMannaContents = new ObservableRangeCollection<MannaContent>(mannaContents);
+
+            AppManager.PrintCompleteText("GermanManna SetMannaCollection()");
+
+            return Task.CompletedTask;
         }
 
-        private static void SetMannaCollection(FrenchManna JsonMannaData)
+        private static Task SetMannaCollection(FrenchManna JsonMannaData)
         {
+            AppManager.PrintStartText("FrenchManna SetMannaCollection()");
+
             var mannaContents = new List<MannaContent>();
 
             foreach (var node in JsonMannaData.Results.Content)
             {
                 mannaContents.Add(new MannaContent
                 {
-                    BookAndJang = $"{node.Book}{node.Chapter}",
+                    BookAndJang = $"{node.BookName}{node.Chapter}",
                     Jeol = node.Verse,
                     MannaString = node.Text,
                 });
+                FrenchRange = $"{node.BookName}{node.Chapter}:{node.Verse}";
             }
 
             FrenchMannaContents = new ObservableRangeCollection<MannaContent>(mannaContents);
+
+            AppManager.PrintCompleteText("FrenchManna SetMannaCollection()");
+
+            return Task.CompletedTask;
         }
 
-        private static void SetMannaCollection(HindiManna JsonMannaData)
+        private static Task SetMannaCollection(HindiManna JsonMannaData)
         {
+            AppManager.PrintStartText("HindiManna SetMannaCollection()");
+
             var mannaContents = new List<MannaContent>();
 
             foreach (var node in JsonMannaData.Results.Content)
             {
                 mannaContents.Add(new MannaContent
                 {
-                    BookAndJang = $"{node.Book}{node.Chapter}",
+                    BookAndJang = $"{node.BookName}{node.Chapter}",
                     Jeol = node.Verse,
                     MannaString = node.Text,
                 });
+                HindiRange = $"{node.BookName}{node.Chapter}:{node.Verse}";
             }
 
             HindiMannaContents = new ObservableRangeCollection<MannaContent>(mannaContents);
+
+            AppManager.PrintCompleteText("HindiManna SetMannaCollection()");
+
+            return Task.CompletedTask;
         }
 
         private static void SetBibleWebAndAppUrl(string bookAndJang)

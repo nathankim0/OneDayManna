@@ -55,9 +55,23 @@ namespace OneDayManna
             return Color.FromHex(Preferences.Get("CustomBackgroundDimColor", Constants.DEFAULT_BACKGROUND_DIM_COLOR));
         }
 
-        public static string GetCurrentLanguage()
+        public static string GetCurrentLanguageString()
         {
             return Preferences.Get("CurrentLanguage", Language.Korean.ToString());
         }
+
+        public static Language GetCurrentLanguageEnumValue()
+        {
+            try
+            {
+                return EnumUtil<Language>.Parse(GetCurrentLanguageString());
+            }
+            catch
+            {
+                return Language.Korean;
+            }
+        }
+
+        public static class EnumUtil<T> { public static T Parse(string s) { return (T)Enum.Parse(typeof(T), s); } }
     }
 }

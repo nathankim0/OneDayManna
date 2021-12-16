@@ -135,6 +135,8 @@ namespace OneDayManna
         [JsonProperty("book")]
         public int Book { get; set; }
 
+        public string BookName { get; set; }
+
         [JsonProperty("chapter")]
         public int Chapter { get; set; }
 

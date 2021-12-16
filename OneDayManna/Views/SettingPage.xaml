@@ -139,16 +139,20 @@
                     MinimumTrackColor="DeepPink"
                     ValueChanged="Slider_ValueChanged" />
 
-                <Label
+                <Button
                     x:Name="languageTitleLabel"
-                    Padding="0,40,0,10"
+                    Margin="40,20,40,0"
+                    Padding="0,20,0,20"
+                    BackgroundColor="{AppThemeBinding Dark=White,
+                                                      Light=Black}"
+                    Clicked="languageTitleLabel_Clicked"
                     FontSize="20"
-                    HorizontalOptions="Center"
+                    HorizontalOptions="Fill"
                     Text="Language"
-                    TextColor="{AppThemeBinding Dark=White,
-                                                Light=Black}" />
+                    TextColor="{AppThemeBinding Dark=Black,
+                                                Light=White}" />
 
-                <Picker
+                <!--<Picker
                     x:Name="languagePicker"
                     FontFamily="batang"
                     HorizontalOptions="Fill"
@@ -165,7 +169,7 @@
                             <x:String>हिन्दी</x:String>
                         </x:Array>
                     </Picker.ItemsSource>
-                </Picker>
+                </Picker>-->
             </StackLayout>
         </ScrollView>
 
