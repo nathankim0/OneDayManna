@@ -83,6 +83,10 @@ namespace OneDayManna.Views
                 "English" => 1,
                 "Spanish" => 2,
                 "Chinese" => 3,
+                "Japanese" => 4,
+                "German" => 5,
+                "French" => 6,
+                "Hindi" => 7,
                 _ => 0,
             };
             ;
@@ -97,6 +101,10 @@ namespace OneDayManna.Views
                 1 => Language.English,
                 2 => Language.Spanish,
                 3 => Language.Chinese,
+                4 => Language.Japanese,
+                5 => Language.German,
+                6 => Language.French,
+                7 => Language.Hindi,
                 _ => Language.Korean,
             };
             Preferences.Set("CurrentLanguage", selectedLanguage.ToString());

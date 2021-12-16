@@ -12,10 +12,20 @@ namespace OneDayManna
         public static ObservableRangeCollection<MannaContent> EnglishMannaContents = new ObservableRangeCollection<MannaContent>();
         public static ObservableRangeCollection<MannaContent> SpanishMannaContents = new ObservableRangeCollection<MannaContent>();
         public static ObservableRangeCollection<MannaContent> ChineseMannaContents = new ObservableRangeCollection<MannaContent>();
+        public static ObservableRangeCollection<MannaContent> JapaneseMannaContents = new ObservableRangeCollection<MannaContent>();
+        public static ObservableRangeCollection<MannaContent> GermanMannaContents = new ObservableRangeCollection<MannaContent>();
+        public static ObservableRangeCollection<MannaContent> FrenchMannaContents = new ObservableRangeCollection<MannaContent>();
+        public static ObservableRangeCollection<MannaContent> HindiMannaContents = new ObservableRangeCollection<MannaContent>();
+
+
         public static KoreanManna KoreanMannaData = new KoreanManna();
         public static EnglishManna EnglishMannaData = new EnglishManna();
         public static SpanishManna SpanishMannaData = new SpanishManna();
         public static ChineseManna ChineseMannaData = new ChineseManna();
+        public static JapaneseManna JapaneseMannaData = new JapaneseManna();
+        public static GermanManna GermanMannaData = new GermanManna();
+        public static FrenchManna FrenchMannaData = new FrenchManna();
+        public static HindiManna HindiMannaData = new HindiManna();
 
         public static string Today { get; set; } = DateTime.Now.ToString("yyyy년 MM월 dd일 (ddd)");
         public static string DisplayDateRange { get; set; } = DateTime.Now.ToString("MM/dd");
@@ -54,16 +64,28 @@ namespace OneDayManna
                 var englishTask = RestService.Instance.GetEnglishManna(BookKor, Jang, JeolRange);
                 var spanishTask = RestService.Instance.GetSpanishManna(BookKor, Jang, JeolRange);
                 var chineseTask = RestService.Instance.GetChineseManna(BookKor, Jang, JeolRange);
+                var japaneseTask = RestService.Instance.GetJapaneseManna(BookKor, Jang, JeolRange);
+                var germanTask = RestService.Instance.GetGermanManna(BookKor, Jang, JeolRange);
+                var frenchTask = RestService.Instance.GetFrenchManna(BookKor, Jang, JeolRange);
+                var hindiTask = RestService.Instance.GetHindiManna(BookKor, Jang, JeolRange);
 
-                await Task.WhenAll(englishTask, spanishTask, chineseTask);
+                await Task.WhenAll(englishTask, spanishTask, chineseTask, japaneseTask, germanTask, frenchTask, hindiTask);
 
                 EnglishMannaData = englishTask.Result;
                 SpanishMannaData = spanishTask.Result;
                 ChineseMannaData = chineseTask.Result;
+                JapaneseMannaData = japaneseTask.Result;
+                GermanMannaData= germanTask.Result;
+                FrenchMannaData= frenchTask.Result;
+                HindiMannaData = hindiTask.Result;
 
                 SetMannaCollection(EnglishMannaData);
                 SetMannaCollection(SpanishMannaData);
                 SetMannaCollection(ChineseMannaData);
+                SetMannaCollection(JapaneseMannaData);
+                SetMannaCollection(GermanMannaData);
+                SetMannaCollection(FrenchMannaData);
+                SetMannaCollection(HindiMannaData);
 
                 AppManager.PrintCompleteText("GetManna()");
 
@@ -155,6 +177,74 @@ namespace OneDayManna
             }
 
             ChineseMannaContents = new ObservableRangeCollection<MannaContent>(mannaContents);
+        }
+
+        private static void SetMannaCollection(JapaneseManna JsonMannaData)
+        {
+            var mannaContents = new List<MannaContent>();
+
+            foreach (var node in JsonMannaData.Results.Content)
+            {
+                mannaContents.Add(new MannaContent
+                {
+                    BookAndJang = $"{node.Book}{node.Chapter}",
+                    Jeol = node.Verse,
+                    MannaString = node.Text,
+                });
+            }
+
+            JapaneseMannaContents = new ObservableRangeCollection<MannaContent>(mannaContents);
+        }
+
+        private static void SetMannaCollection(GermanManna JsonMannaData)
+        {
+            var mannaContents = new List<MannaContent>();
+
+            foreach (var node in JsonMannaData.Results.Content)
+            {
+                mannaContents.Add(new MannaContent
+                {
+                    BookAndJang = $"{node.Book}{node.Chapter}",
+                    Jeol = node.Verse,
+                    MannaString = node.Text,
+                });
+            }
+
+            GermanMannaContents = new ObservableRangeCollection<MannaContent>(mannaContents);
+        }
+
+        private static void SetMannaCollection(FrenchManna JsonMannaData)
+        {
+            var mannaContents = new List<MannaContent>();
+
+            foreach (var node in JsonMannaData.Results.Content)
+            {
+                mannaContents.Add(new MannaContent
+                {
+                    BookAndJang = $"{node.Book}{node.Chapter}",
+                    Jeol = node.Verse,
+                    MannaString = node.Text,
+                });
+            }
+
+            FrenchMannaContents = new ObservableRangeCollection<MannaContent>(mannaContents);
+        }
+
+        private static void SetMannaCollection(HindiManna JsonMannaData)
+        {
+            var mannaContents = new List<MannaContent>();
+
+            foreach (var node in JsonMannaData.Results.Content)
+            {
+                mannaContents.Add(new MannaContent
+                {
+                    BookAndJang = $"{node.Book}{node.Chapter}",
+                    Jeol = node.Verse,
+                    MannaString = node.Text,
+                });
+            }
+
+            HindiMannaContents = new ObservableRangeCollection<MannaContent>(mannaContents);
         }
 
         private static void SetBibleWebAndAppUrl(string bookAndJang)

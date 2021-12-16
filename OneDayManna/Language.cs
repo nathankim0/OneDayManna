@@ -6,6 +6,10 @@ namespace OneDayManna
         Korean,
         English,
         Spanish,
-        Chinese
+        Chinese,
+        Japanese,
+        German,
+        French,
+        Hindi
     }
 }

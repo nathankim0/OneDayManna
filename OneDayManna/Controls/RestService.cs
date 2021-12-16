@@ -145,6 +145,110 @@ namespace OneDayManna
             return new ChineseManna();
         }
 
+        public async Task<JapaneseManna> GetJapaneseManna(string bookKor, int jang, string jeolRange)
+        {
+            var url = GetApiUrl("kougo", bookKor, jang, jeolRange);
+            try
+            {
+                var response = await _client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Debug.WriteLine(content);
+                    var mannaData = JsonConvert.DeserializeObject<JapaneseManna>(content);
+                    foreach (var node in mannaData.Results.Content)
+                    {
+                        Debug.WriteLine(node.Text);
+                    }
+
+                    return mannaData;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("\tERROR {0}", ex.Message);
+            }
+            return new JapaneseManna();
+        }
+
+        public async Task<GermanManna> GetGermanManna(string bookKor, int jang, string jeolRange)
+        {
+            var url = GetApiUrl("luther", bookKor, jang, jeolRange);
+            try
+            {
+                var response = await _client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Debug.WriteLine(content);
+                    var mannaData = JsonConvert.DeserializeObject<GermanManna>(content);
+                    foreach (var node in mannaData.Results.Content)
+                    {
+                        Debug.WriteLine(node.Text);
+                    }
+
+                    return mannaData;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("\tERROR {0}", ex.Message);
+            }
+            return new GermanManna();
+        }
+
+        public async Task<FrenchManna> GetFrenchManna(string bookKor, int jang, string jeolRange)
+        {
+            var url = GetApiUrl("segond_1910", bookKor, jang, jeolRange);
+            try
+            {
+                var response = await _client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Debug.WriteLine(content);
+                    var mannaData = JsonConvert.DeserializeObject<FrenchManna>(content);
+                    foreach (var node in mannaData.Results.Content)
+                    {
+                        Debug.WriteLine(node.Text);
+                    }
+
+                    return mannaData;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("\tERROR {0}", ex.Message);
+            }
+            return new FrenchManna();
+        }
+
+        public async Task<HindiManna> GetHindiManna(string bookKor, int jang, string jeolRange)
+        {
+            var url = GetApiUrl("irv", bookKor, jang, jeolRange);
+            try
+            {
+                var response = await _client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Debug.WriteLine(content);
+                    var mannaData = JsonConvert.DeserializeObject<HindiManna>(content);
+                    foreach (var node in mannaData.Results.Content)
+                    {
+                        Debug.WriteLine(node.Text);
+                    }
+
+                    return mannaData;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("\tERROR {0}", ex.Message);
+            }
+            return new HindiManna();
+        }
+
         public async Task<Stream> GetRandomImageStream()
         {
             try

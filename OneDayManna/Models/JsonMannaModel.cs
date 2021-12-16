@@ -50,6 +50,7 @@ namespace OneDayManna
     //    public List<Content> Content { get; set; }
     //}
 
+    //
     public partial class SpanishManna
     {
         [JsonProperty("results")]
@@ -62,6 +63,7 @@ namespace OneDayManna
         public List<Content> Content { get; set; }
     }
 
+    //
     public partial class ChineseManna
     {
         [JsonProperty("results")]
@@ -74,6 +76,57 @@ namespace OneDayManna
         public List<Content> Content { get; set; }
     }
 
+    //
+    public partial class JapaneseManna
+    {
+        [JsonProperty("results")]
+        public JapaneseResults Results { get; set; }
+    }
+
+    public partial class JapaneseResults
+    {
+        [JsonProperty("kougo")]
+        public List<Content> Content { get; set; }
+    }
+
+    //
+    public partial class GermanManna
+    {
+        [JsonProperty("results")]
+        public GermanResults Results { get; set; }
+    }
+
+    public partial class GermanResults
+    {
+        [JsonProperty("luther")]
+        public List<Content> Content { get; set; }
+    }
+
+    //
+    public partial class FrenchManna
+    {
+        [JsonProperty("results")]
+        public FrenchResults Results { get; set; }
+    }
+
+    public partial class FrenchResults
+    {
+        [JsonProperty("segond_1910")]
+        public List<Content> Content { get; set; }
+    }
+
+    //
+    public partial class HindiManna
+    {
+        [JsonProperty("results")]
+        public HindiResults Results { get; set; }
+    }
+
+    public partial class HindiResults
+    {
+        [JsonProperty("irv")]
+        public List<Content> Content { get; set; }
+    }
     public partial class Content
     {
         [JsonProperty("id")]

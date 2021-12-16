@@ -88,22 +88,7 @@ namespace OneDayManna.Views
             }
             else
             {
-                if (AppManager.GetCurrentLanguage() == Language.Korean.ToString())
-                {
-                    SetKoreanMannaContents();
-                }
-                else if(AppManager.GetCurrentLanguage() == Language.Spanish.ToString())
-                {
-                    SetSpanishMannaContents();
-                }
-                else if (AppManager.GetCurrentLanguage() == Language.Chinese.ToString())
-                {
-                    SetChineseMannaContents();
-                }
-                else
-                {
-                    SetEnglishMannaContents();
-                }
+                SetContentsByLanguage(AppManager.GetCurrentLanguage());
             }
             optionsStackLayout.IsVisible = true;
         }
@@ -203,24 +188,45 @@ namespace OneDayManna.Views
             var settingPage = new SettingPage();
             settingPage.LanguageChanged += (object sender, Language language) =>
             {
-                if (language == Language.Korean)
-                {
-                    SetKoreanMannaContents();
-                }
-                else if(language == Language.Spanish)
-                {
-                    SetSpanishMannaContents();
-                }
-                else if (language == Language.Chinese)
-                {
-                    SetChineseMannaContents();
-                }
-                else
-                {
-                    SetEnglishMannaContents();
-                }
+                SetContentsByLanguage(language.ToString());
             };
             await Navigation.PushAsync(settingPage);
+        }
+
+        private void SetContentsByLanguage(string language)
+        {
+            if (language == Language.Korean.ToString())
+            {
+                SetKoreanMannaContents();
+            }
+            else if (language == Language.Spanish.ToString())
+            {
+                SetSpanishMannaContents();
+            }
+            else if (language == Language.Chinese.ToString())
+            {
+                SetChineseMannaContents();
+            }
+            else if (language == Language.Japanese.ToString())
+            {
+                SetJapaneseMannaContents();
+            }
+            else if (language == Language.German.ToString())
+            {
+                SetGermanMannaContents();
+            }
+            else if (language == Language.French.ToString())
+            {
+                SetFrenchMannaContents();
+            }
+            else if (language == Language.Hindi.ToString())
+            {
+                SetHindiMannaContents();
+            }
+            else
+            {
+                SetEnglishMannaContents();
+            }
         }
 
         private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
@@ -388,6 +394,38 @@ namespace OneDayManna.Views
             if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
 
             mainPageViewModel.MannaContents = MannaDataManager.ChineseMannaContents;
+            mainPageViewModel.Range = MannaDataManager.EnglishMannaData.Reference;
+        }
+
+        private void SetJapaneseMannaContents()
+        {
+            if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
+
+            mainPageViewModel.MannaContents = MannaDataManager.JapaneseMannaContents;
+            mainPageViewModel.Range = MannaDataManager.EnglishMannaData.Reference;
+        }
+
+        private void SetGermanMannaContents()
+        {
+            if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
+
+            mainPageViewModel.MannaContents = MannaDataManager.GermanMannaContents;
+            mainPageViewModel.Range = MannaDataManager.EnglishMannaData.Reference;
+        }
+
+        private void SetFrenchMannaContents()
+        {
+            if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
+
+            mainPageViewModel.MannaContents = MannaDataManager.FrenchMannaContents;
+            mainPageViewModel.Range = MannaDataManager.EnglishMannaData.Reference;
+        }
+
+        private void SetHindiMannaContents()
+        {
+            if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
+
+            mainPageViewModel.MannaContents = MannaDataManager.HindiMannaContents;
             mainPageViewModel.Range = MannaDataManager.EnglishMannaData.Reference;
         }
 

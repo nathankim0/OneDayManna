@@ -158,7 +158,11 @@
                             <x:String>한국어</x:String>
                             <x:String>English</x:String>
                             <x:String>Español</x:String>
-                            <x:String>语言</x:String>
+                            <x:String>漢語</x:String>
+                            <x:String>日本語</x:String>
+                            <x:String>Deutsch</x:String>
+                            <x:String>français</x:String>
+                            <x:String>हिन्दी</x:String>
                         </x:Array>
                     </Picker.ItemsSource>
                 </Picker>
