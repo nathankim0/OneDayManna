@@ -24,9 +24,10 @@
 
     <Grid>
         <Label
+            x:Name="label"
             FontSize="35"
             HorizontalOptions="Center"
-            Text="Saving..."
+            Text="Wait..."
             TextColor="White"
             VerticalOptions="Center" />
     </Grid>

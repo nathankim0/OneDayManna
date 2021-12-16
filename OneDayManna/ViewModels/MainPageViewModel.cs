@@ -28,5 +28,8 @@ namespace OneDayManna
 
         private ImageSource imageSource = ImageSource.FromFile("image1.jpg");
         public ImageSource CurrentImageSource { get => imageSource; set => SetProperty(ref imageSource, value); }
+
+        private bool isLoadingServer;
+        public bool IsLoadingServer { get => isLoadingServer; set => SetProperty(ref isLoadingServer, value); }
     }
 }

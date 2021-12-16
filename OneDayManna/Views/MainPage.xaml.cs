@@ -69,6 +69,8 @@ namespace OneDayManna.Views
         {
             if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
 
+            mainPageViewModel.IsLoadingServer = true;
+
             optionsStackLayout.IsVisible = false;
             await ResetSelection();
 
@@ -99,6 +101,8 @@ namespace OneDayManna.Views
                 SetContentsByLanguage(AppManager.GetCurrentLanguageString());
             }
             optionsStackLayout.IsVisible = true;
+
+            mainPageViewModel.IsLoadingServer = false;
         }
 
         private bool isDownloading;
@@ -110,6 +114,7 @@ namespace OneDayManna.Views
 
             isDownloading = true;
 
+            LoadingPopup.Instance.SetText("Saving...");
             await Navigation.PushPopupAsync(LoadingPopup.Instance);
 
             var result = await ImageManager.SaveImage();
@@ -149,6 +154,7 @@ namespace OneDayManna.Views
             optionsStackLayout.IsVisible = true;
             admobBanner.IsVisible = true;
 
+            LoadingPopup.Instance.SetText("Saving...");
             await Navigation.PushPopupAsync(LoadingPopup.Instance);
 
             var stream = await screenshot.OpenReadAsync();
@@ -206,8 +212,14 @@ namespace OneDayManna.Views
 
         private async void GetMannaByLanguage(object sender, Language language)
         {
+            if (!(BindingContext is MainPageViewModel mainPageViewModel)) return;
+
+            mainPageViewModel.IsLoadingServer = true;
+
             await MannaDataManager.GetManna(language);
             SetContentsByLanguage(language.ToString());
+
+            mainPageViewModel.IsLoadingServer = false;
         }
 
         private void SetContentsByLanguage(string language)

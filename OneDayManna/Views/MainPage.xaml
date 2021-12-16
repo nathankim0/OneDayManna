@@ -203,5 +203,15 @@
                 </ImageButton.Source>
             </ImageButton>
         </StackLayout>
+
+        <Grid BackgroundColor="#80000000" IsVisible="{Binding IsLoadingServer}">
+            <Label
+                x:Name="label"
+                FontSize="35"
+                HorizontalOptions="Center"
+                Text="Loading..."
+                TextColor="White"
+                VerticalOptions="Center" />
+        </Grid>
     </Grid>
 </ContentPage>

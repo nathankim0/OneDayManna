@@ -14,5 +14,10 @@ namespace OneDayManna.Popups
         {
             InitializeComponent();
         }
+
+        public void SetText(string text)
+        {
+            label.Text = text;
+        }
     }
 }

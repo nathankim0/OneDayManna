@@ -86,6 +86,7 @@ namespace OneDayManna.Views
         {
             InitializeComponent();
             BindingContext = new OnboardingPageViewModel();
+            SetSelectedLanguage();
         }
 
         public void SetSelectedLanguage()
