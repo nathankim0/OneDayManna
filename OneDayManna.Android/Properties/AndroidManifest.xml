@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.jinyeob.onedaymanna">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="3" android:versionName="1.2.1" package="com.jinyeob.onedaymanna">
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="30" />
 	<application android:largeHeap="true" android:theme="@style/MainTheme" android:icon="@mipmap/icon" android:label="하루만나">
 		<meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-8018732227937375~9574628800" />
