@@ -86,6 +86,12 @@ namespace OneDayManna.Views
         {
             InitializeComponent();
             BindingContext = new OnboardingPageViewModel();
+
+            if (!Constants.IsDeviceIOS)
+            {
+                Padding = new Thickness(0, Constants.StatusBarHeight, 0, 10);
+            }
+
             SetSelectedLanguage();
         }
 

@@ -16,6 +16,7 @@
 
             <Style TargetType="Label">
                 <Setter Property="Padding" Value="0" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Dark=White, Light=Black}" />
                 <Setter Property="Margin" Value="0" />
                 <Setter Property="FontFamily" Value="batang" />
             </Style>
@@ -23,6 +24,7 @@
             <Style TargetType="Button">
                 <Setter Property="Padding" Value="0" />
                 <Setter Property="Margin" Value="0" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Dark=White, Light=Black}" />
                 <Setter Property="FontFamily" Value="batang" />
             </Style>
         </ResourceDictionary>
