@@ -1,2 +1,1 @@
-# OneDayManna
-하루만나 - 오늘의 묵상을 랜덤 이미지와 함께 제공, 공유 가능
+<img src="https://user-images.githubusercontent.com/37360089/146858418-d57c8b9a-cad1-4473-bd33-9442204fc219.png" width="50%"/><img src="https://user-images.githubusercontent.com/37360089/146858405-11a61733-c042-4fde-99c0-a0c2026aadea.png" width="50%"/>
